@@ -26,7 +26,7 @@ This command will decompile the path to the PACKAGE_INFO.BIN into a PACKAGE_INFO
 
 **Note:** If the PACKAGE.BIN is in the same folder it will add a 'type' object to the file list by looking at the first 4 bytes of the file. This will hint at the type of unknown file and be used in adding an extension to the unknown file when extracting.
 
-```ms
+```cmd
 dissida_filelist-x64.exe --package_info="C:/psp_games/dissidia/PACKAGE_INFO.BIN"
 ```
 
@@ -52,7 +52,7 @@ Wild card for basic increasing numbers are **%1d, %2d, %3d, %4d and %5d** for a 
 
 False positive as possible with wildcards due to the limits of the hashing formula, so do use sparingly!
 
-```ms
+```cmd
 dissida_filelist-x64.exe --hash="voice/en/event/up21/up21_107_190zi.at3"
 ```
 
@@ -64,7 +64,7 @@ This is the batch command for --hash. Enter a text file path and it will hash ea
 
 **Note:** Wild cards are also checked so be careful not to over do it.
 
-```ms
+```cmd
 dissida_filelist-x64.exe --text="C:/psp_games/dissidia/file_names.txt"
 ```
 
@@ -78,7 +78,7 @@ Extracts all files in the PACKAGE_INFO.json file from the PACKAGE.BIN to root di
 
 Can also be run by droping the PACKAGE.BIN file on the exe.
 
-```ms
+```cmd
 dissida_filelist-x64.exe --extract="C:/psp_games/dissidia/PACKAGE.BIN"
 ```
 
@@ -90,7 +90,7 @@ Replace a file in the PACKAGE.BIN file (with in limits). Input path of new file 
 
 **Note:** Files are stored in blocks of 2048 bytes. So if a replaced file is bigger than the orginal, the replacement can be rejected if there isn't enough space.
 
-```ms
+```cmd
 dissida_filelist-x64.exe --replace="C:/psp_games/dissidia/new_audio.at3" --filename="voice/en/event/up21/up21_107_190zi.at3"
 ```
 
@@ -110,7 +110,7 @@ Good for advanced editing.
 
 Can also be run by droping the PACKAGE_INFO.json file on the exe.
 
-```ms
+```cmd
 dissida_filelist-x64.exe --compile="C:/psp_games/dissidia/PACKAGE_INFO.json"
 ```
 
