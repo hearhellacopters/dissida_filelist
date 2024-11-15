@@ -3,13 +3,15 @@
 /**
  * For ppsspp hooking of ULUS10566 version of Dissidia 012
  * 
- * File name:
- * 0x08871288
- * {a0:s}
+ * File name
  * 
- * File hash (in big endian hex):
- * 0x08871428
- * {v0}
+ * Address: 0x08871288
+ * Log format: {a0:s}
+ * 
+ * File hash (in big endian hex)
+ * 
+ * Address:0x08871428
+ * Log format: {v0}
  * 
  * Below is a list of characeter codes the game uses and common file extensions.
  */
