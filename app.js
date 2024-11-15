@@ -1,17 +1,4 @@
 // @ts-check
-
-/**
- * For ppsspp hooking of ULUS10566 version of Dissidia 012
- * 
- * File name:
- * 0x08871288
- * {a0:s}
- * 
- * File hash (in big endian hex):
- * 0x08871428
- * {v0}
- */
-
 const pack = require('./package.json');
 const {
     bireader,
@@ -27,6 +14,13 @@ const {
     exit,
     ask,
 } = require('./src/common');
+const {
+    name_2,
+    name_3,
+    name_5,
+    name_6,
+    exts
+} = require('./src/codes.js');
 
 // Set commands to program for
 PROGRAM
@@ -34,19 +28,19 @@ PROGRAM
   .description(`${C_HEX.blue}Dissidia 012 file list creator and unpacker${C_HEX.reset}`)
   .version(pack.version)
 
-  .option(`-h, --hash <string>`,           `Input a single file path string to see if it matches any hashes. Will add any matching file paths to local PACKAGE_INFO.json file. Can also use wildcards characters for inserting character codes or numbers. See --help for details. Can also use a .txt file with --text for muliple entries.`)
-  
   .option('-p, --package_info <string>',   'Input path of PACKAGE_INFO.BIN file to create a fresh PACKAGE_INFO.json file.')
 
+  .option(`-h, --hash <string>`,           `Input a single file path string to see if it matches any hashes. Will add any matching file paths to local PACKAGE_INFO.json file. Can also use wildcards characters for inserting character codes or numbers. See --help for details. Can also use a .txt file with --text for muliple entries.`)
+
+  .option(`-t, --text <string>`,           `Batch version of --hash. Input a text file and it will hash each line for a file match.`)
+  
   .option(`-e, --extract <string>`,        'Extracts all files from the input PACKAGE.BIN file.')
 
-  .option(`-c, --compile <string>`,        'Compiles a new PACKAGE_INFO.BIN file based off of input PACKAGE_INFO.json.')
-
-  .option(`-r, --replace <string>`,        'Input path of file to add / replace in PACKAGE.BIN (name doesn\'t matter). Use with --filename for PACKAGE_INFO filename entry match. PACKAGE.BIN and PACKAGE_INFO.json must be in root directory.')
+  .option(`-r, --replace <string>`,        'Replace a file in the PACKAGE.BIN file (with in limits). Input path of new file to add / replace in PACKAGE.BIN (name doesn\'t matter). Must use with --filename for PACKAGE_INFO.json filename entry match. PACKAGE.BIN and PACKAGE_INFO.json must be in root directory.')
 
   .option(`-f, --filename <string>`,       'Input path filename matching in PACKAGE_INFO.json of file being replacing in the PACKAGE.BIN file. PACKAGE.BIN and PACKAGE_INFO.json must be in root directory. Craetes new PACKAGE_INFO.BIN too.')
 
-  .option(`-t, --text <string>`,           `Batch version of --hash. Input a text file and it will hash each line for a file match.`)
+  .option(`-c, --compile <string>`,        'Compiles a new PACKAGE_INFO.BIN file based off of input PACKAGE_INFO.json. Created normally when using --replace.')
 
 PROGRAM.addHelpText("after",`
 ${C_HEX.yellow}Note:${C_HEX.reset} The best way to find file names is by playing the ${C_HEX.blue}ULUS10566${C_HEX.reset} version of the game on a PPSSPP and hooking 0x08871288 with a log of {a0:s}. You can then use ${C_HEX.yellow}--hash='path/to/voice_eth100.dat'${C_HEX.reset} to see if there is any match. 
@@ -71,6 +65,13 @@ const input_set = new Set([
     /^-t/,  /^--text/,
   ]);
 
+/**
+ * Filters out strings that match any regular expression in the provided set.
+ *
+ * @param {string[]} strings - An array of strings to be filtered.
+ * @param {Set<RegExp>} regexSet - A set of regular expressions to test against the strings.
+ * @returns {string[]} - An array of strings that do not match any of the regular expressions.
+ */
 function filterByRegex(strings, regexSet) {
     return strings.filter(str => ![...regexSet].some(regex => regex.test(str) ));
 }
@@ -80,217 +81,15 @@ const _INPUT_FILE = filterByRegex(process.argv.slice(2), input_set)[0];
 Logger.info(`Commands:`);
 Logger.info(ARGV);
 if(_INPUT_FILE != undefined){
-    Logger.info(`File:`);
-    Logger.info(_INPUT_FILE);
-}
-
-const name_2 = [
-    "wo",     // Wol
-    "ga",     // Garland
-    "fn",     // Firion
-    "em",     // Emperor
-    "on",     // Onion
-    "cd",     // Cod
-    "ce",     // Cecil
-    "ca",     // Kain
-    "gb",     // Golbez
-    "bu",     // Bartz
-    "ed",     // Exdeath
-    "gi",     // Gilgamesh
-    "ti",     // Terra
-    "cf",     // Kefka
-    "cl",     // Cloud
-    "tf",     // Tifa
-    "ae",     // ? Aerith
-    "sf",     // Sephiroth
-    "sq",     // Squall
-    "la",     // Laguna
-    "am",     // Ultimeica
-    "zi",     // Zidane
-    "kj",     // Kuja
-    "td",     // Tidus
-    "yu",     // Yuna
-    "je",     // Jecht
-    "sh",     // Shantotto
-    "pr",     // Prishe
-    "va",     // Vaan
-    "li",     // Lightning
-    "gs",     // Gabranth
-    "co",     // Cosmos
-    "ch",     // Faral Chaos
-    "na",     // Narriator
-
-    "on",     // FFI
-    "tw",     // FFII
-    "th",     // FFIII
-    "fo",     // FFIV
-    "fi",     // FFV
-    "si",     // FFVI
-    "se",     // FFVII
-    "eh",     // FFVIII
-    "ni",     // FFIX
-    "te",     // FFX
-    "gs",     // Guest
-    "or",     // Dissidia Original
-];
-
-const name_3 = [
-    "one",    // FFI
-    "two",    // FFII
-    "thr",    // FFIII
-    "for",    // FFIV
-    "fiv",    // FFV
-    "six",    // FFVI
-    "sev",    // FFVII
-    "eht",    // FFVIII
-    "nin",    // FFIX
-    "ten",    // FFX
-    "gst",    // Guest
-    "org"     // Dissidia Original
-];
-
-const name_5 = [
-    "on100",  // Wol
-    "on200",  // Garland
-    "tw100",  // Firion
-    "tw200",  // Emperor
-    "th100",  // Onion
-    "th200",  // Cod
-    "fo100",  // Cecil
-    "fo110",  // Kain
-    "fo200",  // Golbez
-    "fi100",  // Bartz
-    "fi200",  // Exdeath
-    "fi210",  // Gilgamesh
-    "si100",  // Terra
-    "si200",  // Kefka
-    "se100",  // Cloud
-    "se110",  // Tifa
-    "se120",  // Aerith
-    "se200",  // Sephiroth
-    "eh100",  // Squall
-    "eh110",  // Laguna
-    "eh200",  // Ultimeica
-    "ni100",  // Zidane
-    "ni200",  // Kuja
-    "te100",  // Tidus
-    "te110",  // Yuna
-    "te200",  // Jecht
-    "gs100",  // Shantotto
-    "gs110",  // Prishe
-    "gs120",  // Vaan
-    "gs130",  // Lightning
-    "gs200",  // Gabranth
-    "or100",  // Cosmos
-    "or700",  // Shinryu
-    "or800",  // Mog
-    "or200",  // Chaos
-    "or210",  // Faral Chaos
-];
-
-const name_6 = [
-    "one100", // Wol
-    "one200", // Garland
-    "two100", // Firion
-    "two200", // Emperor
-    "thr100", // Onion
-    "thr200", // Cod
-    "for100", // Cecil
-    "for110", // Kain
-    "for200", // Golbez
-    "fiv100", // Bartz
-    "fiv200", // Exdeath
-    "fiv210", // Gilgamesh
-    "six100", // Terra
-    "six200", // Kefka
-    "sev100", // Cloud
-    "sev110", // Tifa
-    "sev120", // Aerith
-    "sev200", // Sephiroth
-    "eht100", // Squall
-    "eht110", // Laguna
-    "eht200", // Ultimeica
-    "nin100", // Zidane
-    "nin200", // Kuja
-    "ten100", // Tidus
-    "ten110", // Yuna
-    "ten200", // Jecht
-    "gst100", // Shantotto
-    "gst110", // Prishe
-    "gst120", // Vaan
-    "gst130", // Lightning
-    "gst200", // Gabranth
-    "org100", // Cosmos
-    "org700", // Shinryu
-    "org800", // Mog
-    "org200", // Chaos
-    "org210", // Faral Chaos
-];
+    Logger.info(`File: ${C_HEX.yellow}${_INPUT_FILE}${C_HEX.reset}`);
+};
 
 /**
  * Regular expression to match
  * %2s, %3s, %5s and %6s strings
  * %1d, %2d, %3d, %4d and %5d numbers.
  */
-const place_holders = /%[1-6][sd]/g;
-
-/**
- * Extensions for different file types based of of magic guess.
- */
-const exts = {
-    "RIFF":        "at3",
-    "ARC\u0001":   "objx",
-    "MPK ":        "mpk",
-    "OMG.":        "gmo",
-    "DES4":        "id",
-    "PSF":         "SFO",
-    "MIG.":        "gim",
-    "\u0002":      "exex", // can also be .se
-    "\u0004":      "se",
-    "\u0001":      "cosx",
-    "SSCF":        "scd",
-    "�PNG":       "png",
-    "TIM2":        "tm2",
-    "SEQ ":        "sequence",
-    "drr":         "drr",
-    "dec":         "dec",
-    "dur":         "dur",
-    "due":         "due",
-    "dpr":         "dpr",
-    "EXsW":        "txt",
-    "dpc":         "dpc",
-
-    "LRWD":        "bin",
-    "mess":        "bin",
-    "menu":        "bin",
-    "mlng":        "bin",
-    "VOLD":        "bin",
-    "�\u0001":    "bin",
-    "�\u0002":    "bin",
-    "ef":          "bin",
-    "\u0005":      "bin",
-    "\u0006":      "bin",
-    "PBTL":        "bin",
-    "TPMC":        "bin",
-    "\u0002\t":    "bin",
-    "ACMD":        "bin",
-    "\u0001!":     "bin",
-    "SMSC":        "bin",
-    "SRSC":        "bin",
-    "CLSM":        "bin",
-    "\u0004u":     "bin",
-    "SRMC":        "bin",
- 
-    "WLCN":        "data", // unknown
-    "P\u0002":     "data", // unknown
-    "\u0005\u0001":"data", // unknown
-    "\u0001\u0002":"data", // unknown
-    "KPSH":        "data", // unknown
-    "SDCV":        "data", // unknown
-    "��":        "data", // unknown
-    "\u0016\u0017":"data", // unknown
-    "":            "data", // blank file
-};
+const place_holders = /%[[2|3|5|6][s]|%[1-6][d]/g;
 
 /**
  * %2s, %3s, %5s and %6s strings
@@ -300,7 +99,7 @@ const exts = {
  * @returns {string[]} array of strings
  */
 function generateReplacements(template) {
-    const placeholderRegex = /%([1-6])([sd])/;  // Match %1d, %2s, etc.
+    const placeholderRegex = /%([[2|3|5|6])([s])|%([1-6])([d])/;  // Match %1d, %2s, etc.
 
     // Recursively replace placeholders in the template
     
@@ -323,8 +122,11 @@ function generateReplacements(template) {
         // If no more placeholders, return the string as-is
         if (!match) return [str];
 
-        const [placeholder, width, type] = match;
+        const [placeholder, width1, type1, width2, type2] = match;
         const generatedStrings = [];
+
+        var width = width1 || width2;
+        var type = type1 || type2;
 
         // Generate strings based on placeholder type and width
         switch (`${width}${type}`) {
@@ -401,27 +203,6 @@ function generateReplacements(template) {
 function hasPlaceholders(str) {
     return place_holders.test(str);
 };
-
-/**
- * Converts a Big Endian hex string to a Little Endian integer.
- *
- * @param {string} hexStr - The Big Endian hex string.
- * @returns {number} The Little Endian integer.
- */
-function bigEndianHexToLittleEndianInt(hexStr) {
-    // Ensure the hex string has an even number of characters (pairs of bytes)
-    if (hexStr.length % 2 !== 0) {
-        hexStr = '0' + hexStr;
-    }
-
-    // Split into byte pairs, reverse, and join back into a string
-    // @ts-ignore
-    const littleEndianHex = hexStr.match(/../g).reverse().join('');
-    
-    // Parse the reversed hex string as an integer (base 16)
-    return parseInt(littleEndianHex, 16);
-};
-
 /**
  * for CRC32
  */
@@ -485,11 +266,8 @@ function hash(input){
  * @returns {string} The 4-byte hexadecimal representation.
  */
 function to4ByteHex(num) {
-    if (num < 0 || num > 0xFFFFFFFF) {
-        throw new RangeError("Number must be between 0 and 2^32 - 1.");
-    }
-    // @ts-ignore
-    return num.toString(16).padStart(8, '0').match(/../g).reverse().join(''); // Ensure 8 hex characters (4 bytes)
+    const number_str = (num >>> 0).toString(16).padStart(8, '0').match(/../g);
+    return number_str ? number_str.reverse().join('') : "00000000"; // Ensure 8 hex characters (4 bytes)
 };
 
 /**
@@ -532,7 +310,7 @@ function read_info(info_data, package_data = null){
             hex: to4ByteHex(hash),
             offset: offset,
             size: size,
-            unk1: unk1,
+            unk1: unk1, // no idea here
         };
         if(package_data){
             package_data.FSeek(offset);
@@ -542,12 +320,12 @@ function read_info(info_data, package_data = null){
     return ret;
 };
 
-
 /**
  * Creates a PACKAGE_INFO.json file with the hashes from the PACKAGE_INFO.BIN file and the names from the PACKAGE.BIN file.
  * If the PACKAGE_INFO.json file already exists, it asks if you want to overwrite it.
- * If you cancel the overwrite, it creates a PACKAGE_INFO_new.json file instead.
+ * 
  * If it can't write the file, it logs an error and exits.
+ * 
  * @param {string} PATH_TO_INFO - The path to the PACKAGE_INFO.BIN file.
  * @throws {Error} - If there is an issue reading the data.
  * @returns {Promise<void>} - A promise that resolves when the function is done.
@@ -576,22 +354,8 @@ async function _MAKE_PACKAGE_INFO(PATH_TO_INFO){
                 return await exit();
             } else {
                 // creation canceled
-                try {
-                    const new_loc2 = path.join(path.dirname(PATH_TO_INFO), "PACKAGE_INFO_new.json");
-                    if(!fs.existsSync(new_loc2)){
-                        fs.writeFileSync(new_loc2, JSON.stringify(info,null,4));
-                        Logger.info("PACKAGE_INFO_new.json created!");
-                        Logger.info(new_loc2);
-                        return await exit();
-                    } else {
-                        Logger.warn("PACKAGE_INFO.json creation canceled");
-                        return await exit();
-                    }
-                } catch (error) {
-                    Logger.error("Issue writing PACKAGE_INFO.json.");
-                    Logger.error(error);
-                    return await exit();
-                }
+                Logger.warn("PACKAGE_INFO.json creation canceled");
+                return await exit();
             }
         } else {
             // write file and finish
@@ -608,32 +372,13 @@ async function _MAKE_PACKAGE_INFO(PATH_TO_INFO){
 };
 
 /**
- * File size short hand. Example: ``1.5kb``.
- * 
- * @param {number} bytes - Size
- * @returns {string} formatted
- */
-function _formatFileSize(bytes) {
-    if (bytes < 1024) {
-        return bytes + ' B';
-    } else if (bytes < 1024 * 1024) {
-        return (bytes / 1024).toFixed(2) + 'kb';
-    } else if (bytes < 1024 * 1024 * 1024) {
-        return (bytes / (1024 * 1024)).toFixed(2) + 'mb';
-    } else {
-        return (bytes / (1024 * 1024 * 1024)).toFixed(2) + 'gb';
-    }
-}
-
-/**
  * Loading bar function.
  * 
  * @param {number} totalSteps - total pos
  * @param {number} currentStep - current pos
- * @param {boolean|undefined} withSize - shows size of file as well
  * @returns {number}
  */
-function _consoleLoadingBar(totalSteps, currentStep, withSize = false) {
+function _consoleLoadingBar(totalSteps, currentStep) {
     var barLength = 40;
     // Calculate the percentage completed
     const percentage = (currentStep / totalSteps) * 100;
@@ -647,12 +392,7 @@ function _consoleLoadingBar(totalSteps, currentStep, withSize = false) {
     // Print the loading bar to the console
     process.stdout.clearLine(0); // Clear the previous line
     process.stdout.cursorTo(0); // Move the cursor to the beginning of the line
-    process.stdout.write(
-        `${C_HEX.green}${loadingBar}${C_HEX.reset} - ${percentage.toFixed(2)}%` +
-        (withSize 
-            ? ` of ${_formatFileSize(totalSteps)} / ${_formatFileSize(currentStep)}`
-            : ` - ${currentStep} of ${totalSteps}`)
-    );
+    process.stdout.write(`${C_HEX.green}${loadingBar}${C_HEX.reset} - ${percentage.toFixed(2)}% - ${currentStep} of ${totalSteps}`);
     return 1;
 };
 
@@ -668,12 +408,15 @@ async function _EXTRACT_PACKAGE_DATA(PATH_TO_DATA){
         const PACKAGE_DATA = fs.readFileSync(PATH_TO_DATA);
         const br = new bireader(PACKAGE_DATA);
         const BASE_PATH = path.dirname(PATH_TO_DATA);
-        const PACKAGE_INFO_LOC = path.join(BASE_PATH, "PACKAGE_INFO.json");
+        var PACKAGE_INFO_LOC = path.join(BASE_PATH, "PACKAGE_INFO.json");
 
         if(!fs.existsSync(PACKAGE_INFO_LOC)){
-            Logger.error("Couldn't find PACKAGE_INFO.json in PACKAGE.BIN folder.");
-            Logger.error(PACKAGE_INFO_LOC);
-            await exit();
+            PACKAGE_INFO_LOC = path.join(DIR_NAME, "PACKAGE_INFO.json");
+            if(!fs.existsSync(PACKAGE_INFO_LOC)){
+                Logger.error("Couldn't find PACKAGE_INFO.json in PACKAGE.BIN folder.");
+                Logger.error(PACKAGE_INFO_LOC);
+                return await exit();
+            }
         }
 
         const PACKAGE_INFO = JSON.parse(fs.readFileSync(PACKAGE_INFO_LOC).toString());
@@ -692,14 +435,19 @@ async function _EXTRACT_PACKAGE_DATA(PATH_TO_DATA){
                 
                 br.FSeek(FILE.offset);
                 const file_data = br.extract(FILE.size);
-                var FILE_PATH = path.join(BASE_PATH,FILE.filename);
+                var FILE_PATH = path.join(BASE_PATH,FILE.filename.toLocaleLowerCase());
 
                 if( FILE.filename == "" ||
                     FILE.filename == undefined
                 ){
                     const new_ext = exts[FILE.type] ? exts[FILE.type] : "data";
-                    const new_name = FILE.hex + "." + new_ext;
+                    const new_name = "unknown/" + FILE.hex + "." + new_ext;
                     FILE_PATH = path.join(BASE_PATH, new_name);
+                }
+
+                const BASE_FILE_PATH = path.dirname(FILE_PATH);
+                if(!fs.existsSync(BASE_FILE_PATH)){
+                    fs.mkdirSync(BASE_FILE_PATH, { recursive: true });
                 }
             
                 fs.writeFileSync(FILE_PATH,file_data);
@@ -708,37 +456,55 @@ async function _EXTRACT_PACKAGE_DATA(PATH_TO_DATA){
 
             } catch (error) {
                 process.stdout.write('\n');
-                Logger.error("Couldn't write data.");
+                Logger.error("Couldn't extract data.");
                 Logger.error(error);
-                await exit();
+                return await exit();
             }
         }
         process.stdout.write('\n');
 
         Logger.info("Extract finished!");
 
-        return true;
+        return await exit();
 
     } catch (error){
-        Logger.error("Issue extraction from PACKAGE_INFO.");
+        Logger.error("Issue extracting from PACKAGE_INFO.");
         Logger.error(error);
         return await exit();
     }
 };
 
+/**
+ * Creates a PACKAGE_INFO.BIN file from a PACKAGE_INFO.json file.
+ * If the PACKAGE_INFO.BIN file already exists, it asks if you want to overwrite it.
+ * If you cancel the overwrite, it logs an error and exits.
+ * If it can't write the file, it logs an error and exits.
+ * @param {string} PATH_TO_JSON - The path to the PACKAGE_INFO.json file.
+ * @returns {Promise<void>} - A promise that resolves when the function is done.
+ */
 async function _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON){
     try {
+        Logger.info("Creating PACKAGE_INFO.BIN...");
         const JSON_DATA = JSON.parse(fs.readFileSync(PATH_TO_JSON).toString());
         const NEW_PATH = path.join(path.dirname(PATH_TO_JSON), "PACKAGE_INFO.BIN" );
+        if(fs.existsSync(NEW_PATH)){
+            Logger.warn("PACKAGE_INFO.BIN exists in folder!");
+            Logger.warn(NEW_PATH);
+            const answer = await ask("Overwrite PACKAGE_INFO.BIN file?");
+            if(!answer){
+                Logger.warn("New PACKAGE_INFO.BIN canceled!");
+                return await exit();
+            }
+        }
         const FILES = Object.values(JSON_DATA);
         const NUM_OF_FILES = FILES.length;
         Logger.info("Starting PACKAGE_INFO.BIN creation!");
         const bw = new biwriter(Buffer.alloc(0x3000));
         bw.le();
-        bw.uint(537461272);
-        bw.uint(1801675120); // pack
-        bw.uint(NUM_OF_FILES);
-        bw.uint(0);
+        bw.uint(537461272);   // magics
+        bw.uint(1801675120);  // 'pack'
+        bw.uint(NUM_OF_FILES);// count
+        bw.uint(0);           // padding
         for (let i = 0; i < NUM_OF_FILES; i++) {
             const FILE = FILES[i];
             bw.uint(FILE.hash);
@@ -751,25 +517,11 @@ async function _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON){
         Logger.info("Finished PACKAGE_INFO.BIN creation!");
         bw.trim();
         const NEW_DATA = bw.get();
-        
-        if(fs.existsSync(NEW_PATH)){
-            Logger.warn("PACKAGE_INFO.BIN exists in folder!");
-            Logger.warn(NEW_PATH);
-            const answer = await ask("Overwrite PACKAGE_INFO.BIN file?");
-            if(answer){
-                fs.writeFileSync(NEW_PATH, NEW_DATA);
-                Logger.warn("New PACKAGE_INFO.BIN created!");
-                return await exit();
-            } else {
-                Logger.warn("New PACKAGE_INFO.BIN canceled!");
-                return await exit();
-            }
-        } else {
-            fs.writeFileSync(NEW_PATH, NEW_DATA);
-            Logger.warn(NEW_PATH);
-            Logger.warn("New PACKAGE_INFO.BIN created!");
-            return await exit();
-        }
+
+        fs.writeFileSync(NEW_PATH, NEW_DATA);
+        Logger.info(NEW_PATH);
+        Logger.info("New PACKAGE_INFO.BIN created!");
+        return await exit();
 
     } catch (error) {
         process.stdout.write('\n');
@@ -790,8 +542,8 @@ async function _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON){
 function check_name(file_list, hsh, str){
     if(file_list[hsh]){
         if(file_list[hsh].filename == ""){
-            Logger.info(`${C_HEX.green}Found${C_HEX.reset}:`, str);
-            file_list[hsh].filename = str;
+            Logger.info(`${C_HEX.green}Found${C_HEX.reset}: ${C_HEX.yellow}${str}${C_HEX.reset}`);
+            file_list[hsh].filename = str.toLocaleLowerCase();
             return 1;
         } else {
             Logger.warn(`${C_HEX.yellow}${hsh}${C_HEX.reset} already logged as: ${C_HEX.yellow}${file_list[hsh].filename}${C_HEX.reset}`);
@@ -826,23 +578,25 @@ async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON){
             for (let i = 0; i < str_arays.length; i++) {
                 const str_path = str_arays[i];
                 const hash_num = hash(str_path);
-                Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Path:`, str_path);
+                Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: ${C_HEX.magenta}Path:${C_HEX.reset} ${C_HEX.yellow}${str_path}${C_HEX.reset}`);
                 Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Number:`, hash_num);
                 Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Hex:`, to4ByteHex(hash_num));
                 amount += check_name(JSON_DATA, hash_num, str_path);
             }
         } else {
             const hash_num = hash(str);
-            Logger.info("Path:", str);
-            Logger.info("Number:", hash_num);
-            Logger.info("Hex:", to4ByteHex(hash_num));
+            Logger.info(`${C_HEX.magenta}Path:${C_HEX.reset} ${C_HEX.yellow}${str}${C_HEX.reset}`);
+            Logger.info(`Number:`, hash_num);
+            Logger.info(`Hex:`, to4ByteHex(hash_num));
             amount += check_name(JSON_DATA, hash_num, str);
         }  
     }
 
     Logger.info(`${C_HEX.green}Found ${amount} matches!${C_HEX.reset}`);
-    fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
-    Logger.info("Updated PACKAGE_INFO.json file!");
+    if(amount){
+        fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
+        Logger.info("Updated PACKAGE_INFO.json file!");
+    }
     return await exit();
 };
 
@@ -937,12 +691,12 @@ async function _REPLACE_FILE(PATH_TO_JSON, PATH_TO_DATA, REPLACEMENT_DATA, filen
     }
 
     var has_package_info_json = false;
-    if(_INPUT_FILE && path.extname(_INPUT_FILE).toLocaleLowerCase() == 'json'){
+    if(_INPUT_FILE && path.extname(_INPUT_FILE).toLocaleLowerCase() == '.json'){
         has_package_info_json = true;
     }
 
     var has_txt_file = false;
-    if(_INPUT_FILE && path.extname(_INPUT_FILE).toLocaleLowerCase() == 'txt'){
+    if(_INPUT_FILE && path.extname(_INPUT_FILE).toLocaleLowerCase() == '.txt'){
         has_txt_file = true;
     }
 
@@ -1015,14 +769,16 @@ async function _REPLACE_FILE(PATH_TO_JSON, PATH_TO_DATA, REPLACEMENT_DATA, filen
                     for (let i = 0; i < str_arays.length; i++) {
                         const str_path = str_arays[i];
                         const hash_num = hash(str_path);
-                        Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Path:`, str_path);
+                        Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: ${C_HEX.magenta}Path:${C_HEX.reset} ${C_HEX.yellow}${str_path}${C_HEX.reset}`);
                         Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Number:`, hash_num);
                         Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Hex:`, to4ByteHex(hash_num));
                         found += check_name(JSON_DATA, hash_num, str_path);
                     }
                     Logger.info(`${C_HEX.green}Found ${found} matches!${C_HEX.reset}`);
                     fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
-                    Logger.info("Updated PACKAGE_INFO.json file!");
+                    if(found){
+                        Logger.info("Updated PACKAGE_INFO.json file!");
+                    }
                     await exit();
                 } else {
                     Logger.error("Couldn't find local PACKAGE_INFO.json to save the data.");
@@ -1031,14 +787,19 @@ async function _REPLACE_FILE(PATH_TO_JSON, PATH_TO_DATA, REPLACEMENT_DATA, filen
                 }
             } else {
                 const hash_num = hash(hash_str);
-                Logger.info("Path:", hash_str);
+                Logger.info(`${C_HEX.magenta}Path:${C_HEX.reset}: ${C_HEX.yellow}${hash_str}${C_HEX.reset}`);
                 Logger.info("Number:", hash_num);
                 Logger.info("Hex:", to4ByteHex(hash_num));
+                var found = 0;
                 if(fs.existsSync(PATH_TO_JSON)){
                     const JSON_DATA = JSON.parse(fs.readFileSync(PATH_TO_JSON).toString());
-                    check_name(JSON_DATA, hash_num, hash_str);
-                    fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
-                    Logger.info("Updated PACKAGE_INFO.json file!");
+                    found = check_name(JSON_DATA, hash_num, hash_str);
+                    if(found){
+                        fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
+                        Logger.info("Updated PACKAGE_INFO.json file!");
+                    } else {
+                        Logger.info(`Nothing new found. No update to PACKAGE_INFO.json.`);
+                    }
                     await exit();
                 } else {
                     Logger.error("Couldn't find local PACKAGE_INFO.json to save the data.");
@@ -1056,20 +817,26 @@ async function _REPLACE_FILE(PATH_TO_JSON, PATH_TO_DATA, REPLACEMENT_DATA, filen
         const package_json = _INPUT_FILE || ARGV.compile.replace(/^=/,"");
         try {
             Logger.info("PACKAGE_INFO.BIN creation triggered!");
-            if(fs.existsSync(package_json)){
-                const PATH_TO_JSON = package_json;
-                await _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON);
-            } else {
-                // trys for default location
-                Logger.warn("Couldn't find PACKAGE_INFO.json in input path.");
-                Logger.warn(package_json);
-                const PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
-                if(!fs.existsSync(PATH_TO_JSON)){
-                    Logger.error("Could not find PACKAGE_INFO.json.");
-                    Logger.error(PATH_TO_JSON);
-                    await exit();
+            const answer = await ask("Do you want to create a new PACKAGE_INFO.BIN file?");
+            if(answer){
+                if(fs.existsSync(package_json)){
+                    const PATH_TO_JSON = package_json;
+                    await _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON);
+                } else {
+                    // trys for default location
+                    Logger.warn("Couldn't find PACKAGE_INFO.json in input path.");
+                    Logger.warn(package_json);
+                    const PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
+                    if(!fs.existsSync(PATH_TO_JSON)){
+                        Logger.error("Could not find PACKAGE_INFO.json.");
+                        Logger.error(PATH_TO_JSON);
+                        await exit();
+                    }
+                    await _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON);
                 }
-                await _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON);
+            } else {
+                Logger.warn("Cancelled creating PACKAGE_INFO.BIN.");
+                await exit(); 
             }
         } catch (error) {
             Logger.error("Issue reading PACKAGE_INFO.json.");

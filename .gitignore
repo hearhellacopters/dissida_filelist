@@ -1,6 +1,9 @@
 # dependencies
 node_modules/
+# log files
 logs/
 # PACKAGE FILES
 PACKAGE_INFO.bin
 PACKAGE.bin
+# test files
+test*

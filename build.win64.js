@@ -12,7 +12,7 @@ const build = exe({
   version: package.version,
   target: "node20-win-x64",
   icon: "./app.ico", // Application icons must be same size prebuild target
-  executionLevel: "highestAvailable"
+  // executionLevel: "highestAvailable"
 });
 
 build.then(() => console.log("Windows x64 build completed!"));

@@ -564,7 +564,7 @@ class _CustomLog {
         const writeStream = fs.createWriteStream(this.loc, { flags: 'a' });
         const regexRemove = /\x1b\[[0-9;]*[mG]/g;
         // Write the text to the file
-        writeStream.write(level.replace(regexRemove, '') + message.replace(regexRemove, '') + '\n');
+        writeStream.write((level + " " + message).replace(regexRemove, '') + '\n');
 
         // Listen for the 'finish' event to know when the write operation is complete
         writeStream.on('finish', () => {
@@ -730,14 +730,8 @@ class Logger {
     
         // Extract the file name, line number, and column number
         const fileName = match ? path.basename(match[1]) : null;
-
-        const now = new Date();
-        let hours = now.getHours();
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        hours = hours % 12 || 12;
         
-        _cl.log(`${C_HEX.red}[error ${hours}.${minutes}.${seconds}]${C_HEX.reset} ${fileName ? fileName : ""} - `, message.join(" "));
+        _cl.log(`${C_HEX.red}[error]${C_HEX.reset} ${fileName ? fileName : ""} - `, message.join(" "));
     };
 
     /**
@@ -767,14 +761,8 @@ class Logger {
                 message[key] = `undefined`;
             }
         }
-            
-        const now = new Date();
-        let hours = now.getHours();
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        hours = hours % 12 || 12;
         
-        _cl.log(`${C_HEX.magenta}[warn  ${hours}.${minutes}.${seconds}]${C_HEX.reset}`, message.join(" "));
+        _cl.log(`${C_HEX.magenta}[warn]${C_HEX.reset}`, message.join(" "));
     };
 
     /**
@@ -817,13 +805,7 @@ class Logger {
         // Extract the file name, line number, and column number
         const fileName = match ? path.basename(match[1]) : null;
     
-        const now = new Date();
-        let hours = now.getHours();
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        hours = hours % 12 || 12;
-    
-        _cl.log(`${C_HEX.blue}[debug ${hours}.${minutes}.${seconds}]${C_HEX.reset} ${fileName ? fileName : ""} -`, message.join(" "));
+        _cl.log(`${C_HEX.blue}[debug]${C_HEX.reset} ${fileName ? fileName : ""} -`, message.join(" "));
     }
 
     /**

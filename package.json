@@ -4,7 +4,7 @@
   "description": "Dissidia PSP package.bin file list tool",
   "main": "app.js",
   "scripts": {
-    "start": "node --trace-warnings app.js",
+    "start": "node --trace-warnings --trace-deprecation app.js",
     "test": "node --trace-warnings app.js --package_info=\"PACKAGE_INFO.BIN\"",
     "build": "node --enable-source-maps build.win64.js",
     "build:mac:x64": "pkg . --compress GZip --targets node18-macos-x64 -o dissida_filelist-x64 && codesign --sign - dissida_filelist-x64",
