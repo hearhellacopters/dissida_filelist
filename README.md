@@ -14,7 +14,7 @@ The included exe is Windows x64 but can be built for other systems. It is a simp
 
 ## Commands
 
-Here are all the commands the exe accepts. The app creates /logs folder as well for record keep of all console logs.
+Here are all the commands the exe accepts.
 
 **Note:** You can also find all these commands in the --help command.
 
@@ -66,6 +66,16 @@ This is the batch command for --hash. Enter a text file path and it will hash ea
 
 ```cmd
 dissida_filelist-x64.exe --text="C:/psp_games/dissidia/file_names.txt"
+```
+
+### sorted
+
+> -s for short.
+
+Creates a sorted PACKAGE_INFO_sorted.json file, based off of the offset in the PACKAGE.BIN file.
+
+```cmd
+dissida_filelist-x64.exe --text="C:/psp_games/dissidia/PACKAGE_INFO.json"
 ```
 
 ### extract
@@ -120,7 +130,7 @@ I used [PPSPP](https://www.ppsspp.org/) as it has a great dev tools. While the g
 
 ![break](./img/break.png)
 
-Set a log for this address.
+Set a log to 0x08871288 address with the fmt of {a0:s}.
 
 ![hooking](./img/hook.png)
 

@@ -537,10 +537,10 @@ async function exit() {
  */
 class _CustomLog {
     constructor() {
-        if(!fs.existsSync(path.join(DIR_NAME, `/logs`))){
-            fs.mkdirSync(path.join(DIR_NAME, `/logs`), { recursive: true });
-        }
-        this.loc = path.join(DIR_NAME, `/logs/${JSDate.currentTime()}.log`);
+        //if(!fs.existsSync(path.join(DIR_NAME, `/logs`))){
+        //    fs.mkdirSync(path.join(DIR_NAME, `/logs`), { recursive: true });
+        //}
+        //this.loc = path.join(DIR_NAME, `/logs/${JSDate.currentTime()}.log`);
     }
     /**
      * Log function.
@@ -561,16 +561,16 @@ class _CustomLog {
         if(message == undefined){
             message = "undefined";
         }
-        const writeStream = fs.createWriteStream(this.loc, { flags: 'a' });
-        const regexRemove = /\x1b\[[0-9;]*[mG]/g;
+        //const writeStream = fs.createWriteStream(this.loc, { flags: 'a' });
+        //const regexRemove = /\x1b\[[0-9;]*[mG]/g;
         // Write the text to the file
-        writeStream.write((level + " " + message).replace(regexRemove, '') + '\n');
+        //writeStream.write((level + " " + message).replace(regexRemove, '') + '\n');
 
         // Listen for the 'finish' event to know when the write operation is complete
-        writeStream.on('finish', () => {
-            // Close the write stream
-            writeStream.end();
-        });
+        //writeStream.on('finish', () => {
+        //    // Close the write stream
+        //    writeStream.end();
+        //});
 
         console.log(level, message); // Call console.log
     }
@@ -731,7 +731,7 @@ class Logger {
         // Extract the file name, line number, and column number
         const fileName = match ? path.basename(match[1]) : null;
         
-        _cl.log(`${C_HEX.red}[error]${C_HEX.reset} ${fileName ? fileName : ""} - `, message.join(" "));
+        _cl.log(`${C_HEX.red}[error]${C_HEX.reset} ${fileName ? fileName : ""} -`, message.join(" "));
     };
 
     /**

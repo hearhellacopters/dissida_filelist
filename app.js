@@ -34,6 +34,8 @@ PROGRAM
 
   .option(`-t, --text <string>`,           `Batch version of --hash. Input a text file and it will hash each line for a file match.`)
   
+  .option(`-s, --sorted <string>`,         `Input path of PACKAGE_INFO.json file to create a sorted PACKAGE_INFO_sorted.json file, based off of the offset in the PACKAGE.BIN file.`)
+
   .option(`-e, --extract <string>`,        'Extracts all files from the input PACKAGE.BIN file.')
 
   .option(`-r, --replace <string>`,        'Replace a file in the PACKAGE.BIN file (with in limits). Input path of new file to add / replace in PACKAGE.BIN (name doesn\'t matter). Must use with --filename for PACKAGE_INFO.json filename entry match. PACKAGE.BIN and PACKAGE_INFO.json must be in root directory.')
@@ -56,13 +58,14 @@ PROGRAM.parse(process.argv);
 const ARGV = PROGRAM.opts();
 
 const input_set = new Set([
-    /^-h/,  /^--hash/,
     /^-p/,  /^--package_info/,
+    /^-h/,  /^--hash/,
+    /^-t/,  /^--text/,
+    /^-s/,  /^--sorted/,
     /^-e/,  /^--extract/,
-    /^-c/,  /^--compile/,
     /^-r/,  /^--replace/,
     /^-f/,  /^--filename/,
-    /^-t/,  /^--text/,
+    /^-c/,  /^--compile/,
   ]);
 
 /**
@@ -300,6 +303,7 @@ function read_info(info_data, package_data = null){
      * @type {Object.<number, {filename:string, hex:string, offset:number, size:number, unk1:number, type?:string}>}
      */
     const ret = {};
+    var has_data = false;
     for(let i=0; i<count; i++){
         const hash = br.uint();
         const offset = br.uint() * 2048;
@@ -313,8 +317,47 @@ function read_info(info_data, package_data = null){
             unk1: unk1, // no idea here
         };
         if(package_data){
+            has_data = true;
             package_data.FSeek(offset);
-            ret[hash].type = package_data.string({length:4})
+            ret[hash].type = package_data.string({length:4});
+        }
+    }
+    const sorted = Object.values(ret).sort((a,b)=>a.offset - b.offset);
+
+    var riff_num = 1; var objx_num = 1; var mpk_num = 1; var gmo_num = 1; var id_num = 1;
+    var sfo_num = 1; var file_num = 1; var gim_num = 1; var exex_num = 1; var se_num = 1;
+    var cosx_num = 1; var scd_num = 1; var png_num = 1; var tm2_num = 1; var sequence_num = 1;
+    var drr_num = 1; var dec_num = 1; var dur_num = 1; var due_num = 1; var dpr_num = 1;
+    var txt_num = 1; var dpc_num = 1;
+
+    for (let i = 0; i < sorted.length; i++) {
+        const el = sorted[i];
+        el.file_num = file_num++;
+        if(has_data){
+            switch (el.type) {
+                case "RIFF":      el.riff_num = riff_num++; break;
+                case "OMG.":      el.gmo_num = gmo_num++; break;
+                case "ARC\u0001": el.objx_num = objx_num++; break;
+                case "MPK ":      el.mpk_num = mpk_num++; break;
+                case "DES4":      el.id_num = id_num++; break;
+                case "PSF":       el.sfo_num = sfo_num++; break;
+                case "MIG.":      el.gim_num = gim_num++; break;
+                case "\u0002":    el.exex_num = exex_num++; break;
+                case "\u0004":    el.se_num = se_num++; break;
+                case "\u0001":    el.cosx_num = cosx_num++; break;
+                case "SSCF":      el.scd_num = scd_num++; break;
+                case "�PNG":     el.png_num = png_num++; break;
+                case "TIM2":      el.tm2_num = tm2_num++; break;
+                case "SEQ ":      el.sequence_num = sequence_num++; break;
+                case "drr":       el.drr_num = drr_num++; break;
+                case "dec":       el.dec_num = dec_num++; break;
+                case "dur":       el.dur_num = dur_num++; break;
+                case "due":       el.due_num = due_num++; break;
+                case "dpr":       el.dpr_num = dpr_num++; break;
+                case "EXsW":      el.txt_num = txt_num++; break;
+                case "dpc":       el.dpc_num = dpc_num++; break;
+                default: break;
+            }
         }
     }
     return ret;
@@ -529,7 +572,7 @@ async function _MAKE_PACKAGE_INFO_BIN(PATH_TO_JSON){
         Logger.error(error);
         return await exit();
     }
-}
+};
 
 /**
  * Checks if the given hash has a filename associated with it in the file_list, and if not,
@@ -597,6 +640,15 @@ async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON){
         fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
         Logger.info("Updated PACKAGE_INFO.json file!");
     }
+    const sorted = Object.values(JSON_DATA);
+    var found = 0;
+    for (let i = 0; i < sorted.length; i++) {
+        const el = sorted[i];
+        if(el.filename != ""){
+            found++;
+        }
+    }
+    console.log(`Filenames: ${found} / ${sorted.length}`);
     return await exit();
 };
 
@@ -700,6 +752,35 @@ async function _REPLACE_FILE(PATH_TO_JSON, PATH_TO_DATA, REPLACEMENT_DATA, filen
         has_txt_file = true;
     }
 
+    if(ARGV.sorted){
+        const sorted = ARGV.sorted && ARGV.sorted.replace(/^=/,"");
+        var PATH_TO_JSON = path.join(sorted);
+        console.log(DIR_NAME);
+        if(!fs.existsSync(PATH_TO_JSON)){
+            Logger.error("Input PACKAGE_INFO.json not found.");
+            Logger.error("Checking for PACKAGE_INFO.json in base directory.");
+            PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
+            if(!fs.existsSync(PATH_TO_JSON)){
+                Logger.error("Could not find PACKAGE_INFO.json.");
+                Logger.error(PATH_TO_JSON);
+                await exit();
+            }
+        }
+        try {
+            var PATH_TO_SORTED = path.join(path.dirname(PATH_TO_JSON),'PACKAGE_INFO_sorted.json');
+            const data = fs.readFileSync(PATH_TO_JSON);
+            const info = JSON.parse(data.toString());
+            const sort = Object.values(info).sort((a,b)=>a.offset - b.offset);
+            fs.writeFileSync(PATH_TO_SORTED, JSON.stringify(sort,null,4));
+            Logger.info("Sorted data written to:");
+            Logger.info(PATH_TO_SORTED);
+            await exit();
+        } catch (error) {
+            Logger.error("Issue reading PACKAGE_INFO.json data.");
+            Logger.error(error);
+            await exit();
+        }
+    } else
     if(ARGV.replace && ARGV.filename){
         const {replace, filename} = ARGV;
         const PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
@@ -779,6 +860,15 @@ async function _REPLACE_FILE(PATH_TO_JSON, PATH_TO_DATA, REPLACEMENT_DATA, filen
                     if(found){
                         Logger.info("Updated PACKAGE_INFO.json file!");
                     }
+                    const sorted = Object.values(JSON_DATA);
+                    var found = 0;
+                    for (let i = 0; i < sorted.length; i++) {
+                        const el = sorted[i];
+                        if(el.filename != ""){
+                            found++;
+                        }
+                    }
+                    console.log(`Filenames: ${found} / ${sorted.length}`);
                     await exit();
                 } else {
                     Logger.error("Couldn't find local PACKAGE_INFO.json to save the data.");
@@ -800,6 +890,15 @@ async function _REPLACE_FILE(PATH_TO_JSON, PATH_TO_DATA, REPLACEMENT_DATA, filen
                     } else {
                         Logger.info(`Nothing new found. No update to PACKAGE_INFO.json.`);
                     }
+                    const sorted = Object.values(JSON_DATA);
+                    var found = 0;
+                    for (let i = 0; i < sorted.length; i++) {
+                        const el = sorted[i];
+                        if(el.filename != ""){
+                            found++;
+                        }
+                    }
+                    console.log(`Filenames: ${found} / ${sorted.length}`);
                     await exit();
                 } else {
                     Logger.error("Couldn't find local PACKAGE_INFO.json to save the data.");

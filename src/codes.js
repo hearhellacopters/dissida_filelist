@@ -180,7 +180,7 @@ const exts = {
     "MPK ":        "mpk",
     "OMG.":        "gmo",
     "DES4":        "id",
-    "PSF":         "SFO",
+    "PSF":         "sfo",
     "MIG.":        "gim",
     "\u0002":      "exex", // can also be .se
     "\u0004":      "se",
@@ -189,6 +189,7 @@ const exts = {
     "�PNG":       "png",
     "TIM2":        "tm2",
     "SEQ ":        "sequence",
+    //"mlng":        "sequence", // can be sequence or bin
     "drr":         "drr",
     "dec":         "dec",
     "dur":         "dur",
@@ -200,7 +201,6 @@ const exts = {
     "LRWD":        "bin",
     "mess":        "bin",
     "menu":        "bin",
-    "mlng":        "bin",
     "VOLD":        "bin",
     "�\u0001":    "bin",
     "�\u0002":    "bin",
@@ -217,13 +217,13 @@ const exts = {
     "CLSM":        "bin",
     "\u0004u":     "bin",
     "SRMC":        "bin",
+    "SDCV":        "bin", // save_data_convert
  
     "WLCN":        "data", // unknown
     "P\u0002":     "data", // unknown
     "\u0005\u0001":"data", // unknown
     "\u0001\u0002":"data", // unknown
     "KPSH":        "data", // unknown
-    "SDCV":        "data", // unknown
     "��":        "data", // unknown
     "\u0016\u0017":"data", // unknown
     "":            "data", // blank file
