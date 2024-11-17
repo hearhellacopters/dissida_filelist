@@ -67,6 +67,7 @@ const name_2 = [
     "te",     // FFX
     "gs",     // Guest
     "or",     // Dissidia Original
+    "mx",     // mixed
 ];
 
 /**

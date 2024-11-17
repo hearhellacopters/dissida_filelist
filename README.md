@@ -1,6 +1,6 @@
 # DISSIDIA 012 package extractor
 
-An all in one tool for file name hashing, files decompiling and recompiling for Dissidia 012 for the PSP. Tested on version ULUS10566. File list included is not finished. At the time of writing this only 3701 of 11043 files, but PRs are welcomed. Should work on other copies of Dissidia as well but you'll need to create a new files list from scratch.
+An all in one tool for file name hashing, files decompiling and recompiling for Dissidia 012 for the PSP. Tested on version ULUS10566. File list included is not finished. At the time of writing this only 7409 of 11043 files, but PRs are welcomed. Should work on other copies of Dissidia as well but you'll need to create a new files list from scratch.
 
 ## What is this?
 
@@ -30,13 +30,43 @@ This command will decompile the path to the PACKAGE_INFO.BIN into a PACKAGE_INFO
 dissida_filelist-x64.exe --package_info="C:/psp_games/dissidia/PACKAGE_INFO.BIN"
 ```
 
+### meta
+
+> -m for short.
+
+Gives a report on found file names in list based on extension type. Example:
+
+> | Index | total | found | unfound |
+> | -------- | ------- | ------- | ------- |
+> | riff     | 6173  | 6030  | 143     |
+> | objx     | 2060  | 479   | 1581    |
+> | mpk      | 187   | 72    | 115     |
+> | gmo      | 779   | 263   | 516     |
+> | id       | 55    | 30    | 25      |
+> | sfo      | 1     | 1     | 0       |
+> | gim      | 993   | 102   | 891     |
+> | exex     | 125   | 23    | 102     |
+> | cosx     | 181   | 51    | 130     |
+> | scd      | 131   | 129   | 2       |
+> | png      | 9     | 0     | 9       |
+> | tm2      | 3     | 3     | 0       |
+> | sequence | 17    | 14    | 3       |
+
+Found Total: 7409 / 11043
+
+```cmd
+dissida_filelist-x64.exe --meta="C:/psp_games/dissidia/PACKAGE_INFO.json"
+```
+
 ### hash
 
 > -h for short.
 
 Basic hash command to check if the file name is in the file list. Can also accept wild cards.
 
-Wilds for character and series codes are **%2s, %3s, %5s and %6s**.
+Wilds for character and series codes are **%1s, %2s, %3s, %5s and %6s**.
+
+Code %1s is for all character letters from a-z.
 
 Code %2s for example becomes "fn" for Firion as well as "tw" for for series FFII.
 
@@ -80,7 +110,7 @@ dissida_filelist-x64.exe --text="C:/psp_games/dissidia/PACKAGE_INFO.json"
 
 ### extract
 
-> -e for short.
+> -x for short.
 
 Extracts all files in the PACKAGE_INFO.json file from the PACKAGE.BIN to root directory.
 
