@@ -562,7 +562,7 @@ async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON){
     const TEXT_DATA = fs.readFileSync(TXT_FILE, 'utf8').split('\n');
     var amount = 0;
     for (let i = 0; i < TEXT_DATA.length; i++) {
-        const str = TEXT_DATA[i];//.trim();
+        const str = TEXT_DATA[i].trim();
         const has_wildcard = hasPlaceholders(str);
         if( has_wildcard != null){
             Logger.info("Wildscards detected!");
