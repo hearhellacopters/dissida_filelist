@@ -1053,7 +1053,7 @@
         "riff_num": 651
     },
     "32931989": {
-        "filename": "",
+        "filename": "obj/d_six100.gmo",
         "hash": 32931989,
         "hex": "9580f601",
         "offset": 992577536,
@@ -4737,7 +4737,7 @@
         "riff_num": 2047
     },
     "163487867": {
-        "filename": "",
+        "filename": "wld06.bin",
         "hash": 163487867,
         "hex": "7ba0be09",
         "offset": 69570560,
@@ -5517,7 +5517,7 @@
         "riff_num": 3077
     },
     "188890302": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_one200_face_in_name.gim",
         "hash": 188890302,
         "hex": "be3c420b",
         "offset": 497129472,
@@ -7645,7 +7645,7 @@
         "gim_num": 421
     },
     "270254621": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_six200_face_in_name.gim",
         "hash": 270254621,
         "hex": "1dc21b10",
         "offset": 497203200,
@@ -8951,7 +8951,7 @@
         "gim_num": 77
     },
     "318885087": {
-        "filename": "",
+        "filename": "obj/d_nin200.gmo",
         "hash": 318885087,
         "hex": "dfcc0113",
         "offset": 992808960,
@@ -9633,7 +9633,7 @@
         "riff_num": 3413
     },
     "343971928": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_thr100_face_in_name.gim",
         "hash": 343971928,
         "hex": "58988014",
         "offset": 497147904,
@@ -9897,7 +9897,7 @@
         "gmo_num": 279
     },
     "352571166": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_thr200_1p.gim",
         "hash": 352571166,
         "hex": "1ecf0315",
         "offset": 496926720,
@@ -10839,7 +10839,7 @@
         "gim_num": 158
     },
     "384909459": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_for110_1p.gim",
         "hash": 384909459,
         "hex": "9340f116",
         "offset": 496939008,
@@ -11081,7 +11081,7 @@
         "sequence_num": 7
     },
     "394580066": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_one100_1p.gim",
         "hash": 394580066,
         "hex": "62d08417",
         "offset": 496896000,
@@ -11136,7 +11136,7 @@
         "riff_num": 4835
     },
     "398243233": {
-        "filename": "",
+        "filename": "obj/d_two100.gmo",
         "hash": 398243233,
         "hex": "a1b5bc17",
         "offset": 992325632,
@@ -12191,7 +12191,7 @@
         "riff_num": 4269
     },
     "433309660": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_zako_b_sword.gim",
         "hash": 433309660,
         "hex": "dcc7d319",
         "offset": 497098752,
@@ -12685,7 +12685,7 @@
         "gim_num": 347
     },
     "448022281": {
-        "filename": "",
+        "filename": "obj/r_org800.gmo",
         "hash": 448022281,
         "hex": "0947b41a",
         "offset": 73586688,
@@ -14152,7 +14152,7 @@
         "riff_num": 2040
     },
     "503608981": {
-        "filename": "",
+        "filename": "map/dun61.gmo",
         "hash": 503608981,
         "hex": "9576041e",
         "offset": 80191488,
@@ -14427,7 +14427,7 @@
         "riff_num": 3165
     },
     "512297397": {
-        "filename": "",
+        "filename": "obj/d_thr100.gmo",
         "hash": 512297397,
         "hex": "b509891e",
         "offset": 992376832,
@@ -14712,7 +14712,7 @@
         "mpk_num": 165
     },
     "523671936": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_fiv100_1p.gim",
         "hash": 523671936,
         "hex": "8099361f",
         "offset": 496951296,
@@ -15437,7 +15437,7 @@
         "riff_num": 433
     },
     "553095997": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_gst200_face_in_name.gim",
         "hash": 553095997,
         "hex": "3d93f720",
         "offset": 497307648,
@@ -15787,7 +15787,7 @@
         "gmo_num": 343
     },
     "566310253": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_six100_1p.gim",
         "hash": 566310253,
         "hex": "6d35c121",
         "offset": 496969728,
@@ -18912,7 +18912,7 @@
         "mpk_num": 90
     },
     "676621413": {
-        "filename": "",
+        "filename": "map/dun41.gmo",
         "hash": 676621413,
         "hex": "656c5428",
         "offset": 78909440,
@@ -21041,7 +21041,7 @@
         "riff_num": 4435
     },
     "755875211": {
-        "filename": "",
+        "filename": "map/dun04.gmo",
         "hash": 755875211,
         "hex": "8bbd0d2d",
         "offset": 76171264,
@@ -23579,7 +23579,7 @@
         "riff_num": 2469
     },
     "840133483": {
-        "filename": "",
+        "filename": "obj/d_for200.gmo",
         "hash": 840133483,
         "hex": "6b6b1332",
         "offset": 992479232,
@@ -24073,7 +24073,7 @@
         "riff_num": 5237
     },
     "859323173": {
-        "filename": "",
+        "filename": "dungeon/floor/wld03.bin",
         "hash": 859323173,
         "hex": "253b3833",
         "offset": 70588416,
@@ -24183,7 +24183,7 @@
         "gim_num": 189
     },
     "863789341": {
-        "filename": "",
+        "filename": "map/dun51.gmo",
         "hash": 863789341,
         "hex": "1d617c33",
         "offset": 79513600,
@@ -25214,7 +25214,7 @@
         "riff_num": 5409
     },
     "905434501": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_nin100_1p.gim",
         "hash": 905434501,
         "hex": "85d5f735",
         "offset": 497018880,
@@ -27500,7 +27500,7 @@
         "riff_num": 2164
     },
     "977323146": {
-        "filename": "",
+        "filename": "obj/r_org804.gmo",
         "hash": 977323146,
         "hex": "8ac4403a",
         "offset": 74457088,
@@ -27654,7 +27654,7 @@
         "riff_num": 3043
     },
     "980327263": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_org200_1p.gim",
         "hash": 980327263,
         "hex": "5f9b6e3a",
         "offset": 497080320,
@@ -28586,7 +28586,7 @@
         "riff_num": 2307
     },
     "1019251630": {
-        "filename": "",
+        "filename": "obj/d_gst200.gmo",
         "hash": 1019251630,
         "hex": "ae8bc03c",
         "offset": 993005568,
@@ -28684,7 +28684,7 @@
         "riff_num": 3287
     },
     "1021792092": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_sev110_1p.gim",
         "hash": 1021792092,
         "hex": "5c4fe73c",
         "offset": 496988160,
@@ -32025,7 +32025,7 @@
         "objx_num": 1675
     },
     "1132201684": {
-        "filename": "",
+        "filename": "obj/d_sev100.gmo",
         "hash": 1132201684,
         "hex": "d4067c43",
         "offset": 992630784,
@@ -33462,7 +33462,7 @@
         "riff_num": 5015
     },
     "1185127122": {
-        "filename": "",
+        "filename": "map/dun82.gmo",
         "hash": 1185127122,
         "hex": "d29aa346",
         "offset": 87021568,
@@ -34450,7 +34450,7 @@
         "objx_num": 1190
     },
     "1216808994": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_thr200_face_in_name.gim",
         "hash": 1216808994,
         "hex": "22088748",
         "offset": 497154048,
@@ -35889,7 +35889,7 @@
         "objx_num": 1845
     },
     "1268193316": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_sev200_1p.gim",
         "hash": 1268193316,
         "hex": "2418974b",
         "offset": 496994304,
@@ -36153,7 +36153,7 @@
         "riff_num": 4439
     },
     "1276924519": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_six100_face_in_name.gim",
         "hash": 1276924519,
         "hex": "67521c4c",
         "offset": 497197056,
@@ -37600,7 +37600,7 @@
         "riff_num": 5300
     },
     "1329476530": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_gst100_1p.gim",
         "hash": 1329476530,
         "hex": "b2333e4f",
         "offset": 497049600,
@@ -41387,7 +41387,7 @@
         "riff_num": 544
     },
     "1459974731": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_eht200_1p.gim",
         "hash": 1459974731,
         "hex": "4b720557",
         "offset": 497012736,
@@ -41519,7 +41519,7 @@
         "objx_num": 325
     },
     "1464184004": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_one100_face_in_name.gim",
         "hash": 1464184004,
         "hex": "c4ac4557",
         "offset": 497123328,
@@ -41977,7 +41977,7 @@
         "objx_num": 1364
     },
     "1481903020": {
-        "filename": "",
+        "filename": "obj/d_sev110.gmo",
         "hash": 1481903020,
         "hex": "ac0b5458",
         "offset": 992657408,
@@ -43174,7 +43174,7 @@
         "riff_num": 2455
     },
     "1522655019": {
-        "filename": "",
+        "filename": "dungeon/floor/wld06.bin",
         "hash": 1522655019,
         "hex": "2bdfc15a",
         "offset": 70666240,
@@ -43481,7 +43481,7 @@
         "objx_num": 403
     },
     "1532837903": {
-        "filename": "",
+        "filename": "obj/r_org808.gmo",
         "hash": 1532837903,
         "hex": "0f405d5b",
         "offset": 75321344,
@@ -45741,7 +45741,7 @@
         "riff_num": 218
     },
     "1615283317": {
-        "filename": "",
+        "filename": "wld03.bin",
         "hash": 1615283317,
         "hex": "75444760",
         "offset": 69246976,
@@ -46290,7 +46290,7 @@
         "riff_num": 4404
     },
     "1635850219": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_for200_1p.gim",
         "hash": 1635850219,
         "hex": "eb178161",
         "offset": 496945152,
@@ -47003,7 +47003,7 @@
         "riff_num": 99
     },
     "1658624940": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_gst130_face_in_name.gim",
         "hash": 1658624940,
         "hex": "ac9bdc62",
         "offset": 497301504,
@@ -47596,7 +47596,7 @@
         "riff_num": 1118
     },
     "1677777414": {
-        "filename": "",
+        "filename": "map/dun05.gmo",
         "hash": 1677777414,
         "hex": "06da0064",
         "offset": 76314624,
@@ -48430,7 +48430,7 @@
         "riff_num": 2736
     },
     "1700889598": {
-        "filename": "",
+        "filename": "obj/d_ten200.gmo",
         "hash": 1700889598,
         "hex": "fe836165",
         "offset": 992884736,
@@ -49165,7 +49165,7 @@
         "file_num": 2297
     },
     "1727844022": {
-        "filename": "",
+        "filename": "obj/d_fiv210.gmo",
         "hash": 1727844022,
         "hex": "b6cefc66",
         "offset": 992557056,
@@ -49767,7 +49767,7 @@
         "cosx_num": 56
     },
     "1749470968": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_fiv210_1p.gim",
         "hash": 1749470968,
         "hex": "f8ce4668",
         "offset": 496963584,
@@ -49987,7 +49987,7 @@
         "riff_num": 3913
     },
     "1757877237": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_gst120_face_in_name.gim",
         "hash": 1757877237,
         "hex": "f513c768",
         "offset": 497295360,
@@ -50217,7 +50217,7 @@
         "riff_num": 2627
     },
     "1770802701": {
-        "filename": "",
+        "filename": "map/dun31.gmo",
         "hash": 1770802701,
         "hex": "0d4e8c69",
         "offset": 78145536,
@@ -51357,7 +51357,7 @@
         "riff_num": 1307
     },
     "1813943569": {
-        "filename": "",
+        "filename": "obj/d_eht100.gmo",
         "hash": 1813943569,
         "hex": "11951e6c",
         "offset": 992704512,
@@ -54387,7 +54387,7 @@
         "objx_num": 1986
     },
     "1923367797": {
-        "filename": "",
+        "filename": "map/dun21.gmo",
         "hash": 1923367797,
         "hex": "7543a472",
         "offset": 77395968,
@@ -56537,7 +56537,7 @@
         "riff_num": 140
     },
     "1995148062": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_gst110_face_in_name.gim",
         "hash": 1995148062,
         "hex": "1e8beb76",
         "offset": 497289216,
@@ -56712,7 +56712,7 @@
         "riff_num": 1016
     },
     "2000066665": {
-        "filename": "",
+        "filename": "obj/d_eht110.gmo",
         "hash": 2000066665,
         "hex": "69983677",
         "offset": 992731136,
@@ -59061,7 +59061,7 @@
         "file_num": 673
     },
     "2088679556": {
-        "filename": "",
+        "filename": "obj/d_one200.gmo",
         "hash": 2088679556,
         "hex": "84b87e7c",
         "offset": 992301056,
@@ -59336,7 +59336,7 @@
         "riff_num": 255
     },
     "2096104263": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_gst100_face_in_name.gim",
         "hash": 2096104263,
         "hex": "4703f07c",
         "offset": 497283072,
@@ -59829,7 +59829,7 @@
         "objx_num": 1197
     },
     "2111095758": {
-        "filename": "",
+        "filename": "obj/d_fiv200.gmo",
         "hash": 2111095758,
         "hex": "cec3d47d",
         "offset": 992530432,
@@ -61686,7 +61686,7 @@
         "file_num": 33
     },
     "2178316220": {
-        "filename": "",
+        "filename": "dungeon/floor/wld05.bin",
         "hash": 2178316220,
         "hex": "bc77d681",
         "offset": 70649856,
@@ -63232,7 +63232,7 @@
         "riff_num": 303
     },
     "2227960938": {
-        "filename": "",
+        "filename": "map/dun12.gmo",
         "hash": 2227960938,
         "hex": "6afccb84",
         "offset": 82776064,
@@ -65052,7 +65052,7 @@
         "riff_num": 3907
     },
     "2293139475": {
-        "filename": "",
+        "filename": "obj/r_org802.gmo",
         "hash": 2293139475,
         "hex": "1388ae88",
         "offset": 74024960,
@@ -69001,7 +69001,7 @@
         "riff_num": 5222
     },
     "2423468544": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_thr100_1p.gim",
         "hash": 2423468544,
         "hex": "00327390",
         "offset": 496920576,
@@ -70077,7 +70077,7 @@
         "objx_num": 1954
     },
     "2458238695": {
-        "filename": "",
+        "filename": "obj/d_sev200.gmo",
         "hash": 2458238695,
         "hex": "e7be8592",
         "offset": 992677888,
@@ -70219,7 +70219,7 @@
         "riff_num": 5959
     },
     "2465475964": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_one200_1p.gim",
         "hash": 2465475964,
         "hex": "7c2df492",
         "offset": 496902144,
@@ -71238,7 +71238,7 @@
         "riff_num": 3873
     },
     "2499605219": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_fiv100_face_in_name.gim",
         "hash": 2499605219,
         "hex": "e3f2fc94",
         "offset": 497178624,
@@ -72810,7 +72810,7 @@
         "riff_num": 3345
     },
     "2558236345": {
-        "filename": "",
+        "filename": "obj/d_org200.gmo",
         "hash": 2558236345,
         "hex": "b9967b98",
         "offset": 993028096,
@@ -73601,7 +73601,7 @@
         "gmo_num": 487
     },
     "2588304542": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_fiv200_1p.gim",
         "hash": 2588304542,
         "hex": "9e64469a",
         "offset": 496957440,
@@ -74413,7 +74413,7 @@
         "riff_num": 4676
     },
     "2611244897": {
-        "filename": "",
+        "filename": "wld04.bin",
         "hash": 2611244897,
         "hex": "616fa49b",
         "offset": 69373952,
@@ -75336,7 +75336,7 @@
         "riff_num": 2933
     },
     "2645832261": {
-        "filename": "",
+        "filename": "map/dun81.gmo",
         "hash": 2645832261,
         "hex": "4532b49d",
         "offset": 81399808,
@@ -75710,7 +75710,7 @@
         "objx_num": 1849
     },
     "2658905929": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_two200_face_in_name.gim",
         "hash": 2658905929,
         "hex": "49af7b9e",
         "offset": 497141760,
@@ -77826,7 +77826,7 @@
         "riff_num": 170
     },
     "2739029103": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_nin200_face_in_name.gim",
         "hash": 2739029103,
         "hex": "6f4442a3",
         "offset": 497258496,
@@ -78187,7 +78187,7 @@
         "riff_num": 2250
     },
     "2755821486": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_sev110_face_in_name.gim",
         "hash": 2755821486,
         "hex": "ae7f42a4",
         "offset": 497215488,
@@ -78319,7 +78319,7 @@
         "objx_num": 1183
     },
     "2761138661": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_two100_1p.gim",
         "hash": 2761138661,
         "hex": "e5a193a4",
         "offset": 496908288,
@@ -78396,7 +78396,7 @@
         "gim_num": 322
     },
     "2763114611": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_six200_1p.gim",
         "hash": 2763114611,
         "hex": "73c8b1a4",
         "offset": 496975872,
@@ -80264,7 +80264,7 @@
         "riff_num": 5337
     },
     "2824473488": {
-        "filename": "",
+        "filename": "obj/r_org806.gmo",
         "hash": 2824473488,
         "hex": "900b5aa8",
         "offset": 74893312,
@@ -80483,7 +80483,7 @@
         "file_num": 32
     },
     "2831953273": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_ten200_1p.gim",
         "hash": 2831953273,
         "hex": "792dcca8",
         "offset": 497043456,
@@ -80845,7 +80845,7 @@
         "riff_num": 5909
     },
     "2847140834": {
-        "filename": "",
+        "filename": "map/dun22.gmo",
         "hash": 2847140834,
         "hex": "e2ebb3a9",
         "offset": 83359744,
@@ -81907,7 +81907,7 @@
         "riff_num": 4309
     },
     "2888662013": {
-        "filename": "",
+        "filename": "obj/d_fiv100.gmo",
         "hash": 2888662013,
         "hex": "fd7b2dac",
         "offset": 992505856,
@@ -82347,7 +82347,7 @@
         "riff_num": 3326
     },
     "2911305911": {
-        "filename": "",
+        "filename": "obj/d_one100.gmo",
         "hash": 2911305911,
         "hex": "b70087ad",
         "offset": 992274432,
@@ -82808,7 +82808,7 @@
         "riff_num": 3939
     },
     "2925131767": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_sev100_face_in_name.gim",
         "hash": 2925131767,
         "hex": "f7f759ae",
         "offset": 497209344,
@@ -83422,7 +83422,7 @@
         "gmo_num": 551
     },
     "2947561141": {
-        "filename": "",
+        "filename": "obj/d_ten110.gmo",
         "hash": 2947561141,
         "hex": "b536b0af",
         "offset": 992862208,
@@ -83697,7 +83697,7 @@
         "riff_num": 5850
     },
     "2961647771": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_nin200_1p.gim",
         "hash": 2961647771,
         "hex": "9b2887b0",
         "offset": 497025024,
@@ -85509,7 +85509,7 @@
         "riff_num": 3821
     },
     "3029875661": {
-        "filename": "",
+        "filename": "obj/d_ten100.gmo",
         "hash": 3029875661,
         "hex": "cd3b98b4",
         "offset": 992835584,
@@ -87131,7 +87131,7 @@
         "riff_num": 1189
     },
     "3093484235": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_ten200_face_in_name.gim",
         "hash": 3093484235,
         "hex": "cbd262b8",
         "offset": 497276928,
@@ -87974,7 +87974,7 @@
         "riff_num": 5729
     },
     "3127830341": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_sev120_face_in_name.gim",
         "hash": 3127830341,
         "hex": "45e76eba",
         "offset": 497221632,
@@ -89431,7 +89431,7 @@
         "riff_num": 1232
     },
     "3174996436": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_gst110_1p.gim",
         "hash": 3174996436,
         "hex": "d4993ebd",
         "offset": 497055744,
@@ -89695,7 +89695,7 @@
         "riff_num": 2335
     },
     "3186044194": {
-        "filename": "",
+        "filename": "obj/d_eht200.gmo",
         "hash": 3186044194,
         "hex": "222de7bd",
         "offset": 992751616,
@@ -89793,7 +89793,7 @@
         "gmo_num": 129
     },
     "3189712948": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_eht200_face_in_name.gim",
         "hash": 3189712948,
         "hex": "34281fbe",
         "offset": 497246208,
@@ -90321,7 +90321,7 @@
         "riff_num": 3257
     },
     "3205984913": {
-        "filename": "",
+        "filename": "map/dun06.gmo",
         "hash": 3205984913,
         "hex": "917217bf",
         "offset": 76443648,
@@ -90937,7 +90937,7 @@
         "cosx_num": 55
     },
     "3225494549": {
-        "filename": "",
+        "filename": "obj/d_gst130.gmo",
         "hash": 3225494549,
         "hex": "152441c0",
         "offset": 992985088,
@@ -91639,7 +91639,7 @@
         "objx_num": 1411
     },
     "3248746398": {
-        "filename": "",
+        "filename": "obj/r_org803.gmo",
         "hash": 3248746398,
         "hex": "9eefa3c1",
         "offset": 74242048,
@@ -92221,7 +92221,7 @@
         "file_num": 184
     },
     "3269520064": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_fiv210_face_in_name.gim",
         "hash": 3269520064,
         "hex": "c0eae0c2",
         "offset": 497190912,
@@ -92265,7 +92265,7 @@
         "gmo_num": 513
     },
     "3271062764": {
-        "filename": "",
+        "filename": "obj/d_nin100.gmo",
         "hash": 3271062764,
         "hex": "ec74f8c2",
         "offset": 992776192,
@@ -93507,7 +93507,7 @@
         "objx_num": 464
     },
     "3314511752": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_org200_face_in_name.gim",
         "hash": 3314511752,
         "hex": "886f8fc5",
         "offset": 497313792,
@@ -93847,7 +93847,7 @@
         "riff_num": 3100
     },
     "3326414226": {
-        "filename": "",
+        "filename": "obj/d_two200.gmo",
         "hash": 3326414226,
         "hex": "920d45c6",
         "offset": 992348160,
@@ -94973,7 +94973,7 @@
         "riff_num": 5238
     },
     "3369799729": {
-        "filename": "",
+        "filename": "dungeon/floor/wld04.bin",
         "hash": 3369799729,
         "hex": "3110dbc8",
         "offset": 70625280,
@@ -95038,7 +95038,7 @@
         "riff_num": 2541
     },
     "3371917977": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_fiv200_face_in_name.gim",
         "hash": 3371917977,
         "hex": "9962fbc8",
         "offset": 497184768,
@@ -95653,7 +95653,7 @@
         "riff_num": 3388
     },
     "3394162348": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_gst200_1p.gim",
         "hash": 3394162348,
         "hex": "acce4eca",
         "offset": 497074176,
@@ -97880,7 +97880,7 @@
         "riff_num": 3725
     },
     "3471303994": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_sev100_1p.gim",
         "hash": 3471303994,
         "hex": "3ae5e7ce",
         "offset": 496982016,
@@ -98077,7 +98077,7 @@
         "riff_num": 2411
     },
     "3480269190": {
-        "filename": "",
+        "filename": "obj/d_thr200.gmo",
         "hash": 3480269190,
         "hex": "86b170cf",
         "offset": 992403456,
@@ -98110,7 +98110,7 @@
         "riff_num": 5616
     },
     "3482642385": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_org210_face_in_name.gim",
         "hash": 3482642385,
         "hex": "d1e794cf",
         "offset": 497319936,
@@ -98374,7 +98374,7 @@
         "riff_num": 4619
     },
     "3490658470": {
-        "filename": "",
+        "filename": "obj/d_six200.gmo",
         "hash": 3490658470,
         "hex": "a6380fd0",
         "offset": 992604160,
@@ -99602,7 +99602,7 @@
         "gim_num": 351
     },
     "3530919765": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_eht100_1p.gim",
         "hash": 3530919765,
         "hex": "558f75d2",
         "offset": 497000448,
@@ -99767,7 +99767,7 @@
         "riff_num": 5120
     },
     "3534293228": {
-        "filename": "",
+        "filename": "wld05.bin",
         "hash": 3534293228,
         "hex": "ec08a9d2",
         "offset": 69488640,
@@ -101806,7 +101806,7 @@
         "riff_num": 4432
     },
     "3605960351": {
-        "filename": "",
+        "filename": "map/dun03.gmo",
         "hash": 3605960351,
         "hex": "9f96eed6",
         "offset": 76036096,
@@ -103909,7 +103909,7 @@
         "objx_num": 1443
     },
     "3681102189": {
-        "filename": "",
+        "filename": "obj/d_gst120.gmo",
         "hash": 3681102189,
         "hex": "6d2969db",
         "offset": 992962560,
@@ -105267,7 +105267,7 @@
         "riff_num": 1728
     },
     "3728462714": {
-        "filename": "",
+        "filename": "map/dun72.gmo",
         "hash": 3728462714,
         "hex": "7ad33bde",
         "offset": 86437888,
@@ -105991,7 +105991,7 @@
         "gim_num": 889
     },
     "3753671169": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_ten110_1p.gim",
         "hash": 3753671169,
         "hex": "017abcdf",
         "offset": 497037312,
@@ -106607,7 +106607,7 @@
         "riff_num": 4142
     },
     "3780602909": {
-        "filename": "",
+        "filename": "obj/r_org807.gmo",
         "hash": 3780602909,
         "hex": "1d6c57e1",
         "offset": 75106304,
@@ -106892,7 +106892,7 @@
         "objx_num": 1926
     },
     "3793270862": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_eht100_face_in_name.gim",
         "hash": 3793270862,
         "hex": "4eb818e2",
         "offset": 497233920,
@@ -107837,7 +107837,7 @@
         "objx_num": 1962
     },
     "3823817560": {
-        "filename": "",
+        "filename": "obj/d_for100.gmo",
         "hash": 3823817560,
         "hex": "58d3eae3",
         "offset": 992432128,
@@ -108002,7 +108002,7 @@
         "objx_num": 1639
     },
     "3831841457": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_ten100_face_in_name.gim",
         "hash": 3831841457,
         "hex": "b14265e4",
         "offset": 497264640,
@@ -108331,7 +108331,7 @@
         "riff_num": 1404
     },
     "3841059573": {
-        "filename": "",
+        "filename": "menu/jp/story_mode/chara2/p_for100_1p.gim",
         "hash": 3841059573,
         "hex": "f5eaf1e4",
         "offset": 496932864,
@@ -109683,7 +109683,7 @@
         "riff_num": 5816
     },
     "3892523031": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_eht110_face_in_name.gim",
         "hash": 3892523031,
         "hex": "173003e8",
         "offset": 497240064,
@@ -109826,7 +109826,7 @@
         "objx_num": 1145
     },
     "3899378058": {
-        "filename": "",
+        "filename": "map/dun52.gmo",
         "hash": 3899378058,
         "hex": "8ac96be8",
         "offset": 85344256,
@@ -112183,7 +112183,7 @@
         "objx_num": 1656
     },
     "3979948957": {
-        "filename": "",
+        "filename": "obj/d_gst100.gmo",
         "hash": 3979948957,
         "hex": "9d3339ed",
         "offset": 992907264,
@@ -113466,7 +113466,7 @@
         "riff_num": 3027
     },
     "4027260110": {
-        "filename": "",
+        "filename": "menu/jp/character_select/chara2/p_org210_1p.gim",
         "hash": 4027260110,
         "hex": "ce1c0bf0",
         "offset": 59359232,
@@ -114463,7 +114463,7 @@
         "objx_num": 451
     },
     "4066273165": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_sev200_face_in_name.gim",
         "hash": 4066273165,
         "hex": "8d675ef2",
         "offset": 497227776,
@@ -115263,7 +115263,7 @@
         "gmo_num": 65
     },
     "4090690098": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_for200_face_in_name.gim",
         "hash": 4090690098,
         "hex": "32fad2f3",
         "offset": 497172480,
@@ -116329,7 +116329,7 @@
         "objx_num": 1454
     },
     "4128325349": {
-        "filename": "",
+        "filename": "obj/d_gst110.gmo",
         "hash": 4128325349,
         "hex": "e53e11f6",
         "offset": 992937984,
@@ -117747,7 +117747,7 @@
         "riff_num": 564
     },
     "4173520416": {
-        "filename": "",
+        "filename": "obj/d_for110.gmo",
         "hash": 4173520416,
         "hex": "20dec2f8",
         "offset": 992458752,
@@ -120920,7 +120920,7 @@
         "riff_num": 348
     },
     "4282766357": {
-        "filename": "",
+        "filename": "menu/jp/common/chara_face_in_name/p_nin100_face_in_name.gim",
         "hash": 4282766357,
         "hex": "15d445ff",
         "offset": 497252352,

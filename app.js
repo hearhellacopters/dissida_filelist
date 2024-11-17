@@ -226,7 +226,7 @@ if(_INPUT_FILE != undefined){
         const hash_str = ARGV.hash.replace(/^=/,"");
         try {
             const PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
-            if(hasPlaceholders(hash_str)){
+            if(hasPlaceholders(hash_str) != null){
                 if(fs.existsSync(PATH_TO_JSON)){
                     const JSON_DATA = JSON.parse(fs.readFileSync(PATH_TO_JSON).toString());
                     Logger.info("Wildscards detected!");

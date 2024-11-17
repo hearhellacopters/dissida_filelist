@@ -234,7 +234,7 @@ const place_holders = /%[[1|2|3|5|6][s]|%[1-6][d]/g;
  * @returns {boolean} - True if %s or %d is found, otherwise false.
  */
 function hasPlaceholders(str) {
-    return place_holders.test(str);
+    return str.match(place_holders);
 };
 
 /**
@@ -562,8 +562,9 @@ async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON){
     const TEXT_DATA = fs.readFileSync(TXT_FILE, 'utf8').split('\n');
     var amount = 0;
     for (let i = 0; i < TEXT_DATA.length; i++) {
-        const str = TEXT_DATA[i].trim();
-        if(hasPlaceholders(str)){
+        const str = TEXT_DATA[i];//.trim();
+        const has_wildcard = hasPlaceholders(str);
+        if( has_wildcard != null){
             Logger.info("Wildscards detected!");
             Logger.info("Creating an array of strings.");
             Logger.info(`${C_HEX.yellow}Note${C_HEX.reset}: False positive as possible so use sparingly.`);

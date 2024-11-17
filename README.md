@@ -64,7 +64,7 @@ dissida_filelist-x64.exe --meta="C:/psp_games/dissidia/PACKAGE_INFO.json"
 
 Basic hash command to check if the file name is in the file list. Can also accept wild cards.
 
-Wilds for character and series codes are **%1s, %2s, %3s, %5s and %6s**.
+Wildcards for character and series codes are **%1s, %2s, %3s, %5s and %6s**.
 
 Code %1s is for all character letters from a-z.
 
@@ -78,7 +78,7 @@ Code %6s for example becomes the full character codes "gst200" for Gabranth.
 
 Full code lists can be found in [code.js file](src/codes.js).
 
-Wild card for basic increasing numbers are **%1d, %2d, %3d, %4d and %5d** for a 1-5 digital value. **Note:** %1d generates 10 strings replaced with 0-9, while %5d generates 99999 so use with caution!
+Wildcards for basic increasing numbers are **%1d, %2d, %3d, %4d and %5d** for a 1-5 digital value. **Note:** %1d generates 10 strings replaced with 0-9, while %5d generates 99999 so use with caution!
 
 False positive as possible with wildcards due to the limits of the hashing formula, so do use sparingly!
 
