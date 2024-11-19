@@ -68,6 +68,16 @@ const name_2 = [
     "gs",     // Guest
     "or",     // Dissidia Original
     "mx",     // mixed
+
+    "en",     // English
+    "jp",     // Japanese
+    "zq",     // ZQ 
+    "fr",     // French
+    "de",     // German
+    "it",     // Italian
+    "es",     // Spanish
+    "ru",     // Russian
+    "m_"      // Mixed
 ];
 
 /**
@@ -85,7 +95,16 @@ const name_3 = [
     "nin",    // FFIX
     "ten",    // FFX
     "gst",    // Guest
-    "org"     // Dissidia Original
+    "org",    // Dissidia Original
+    "zck",    // Zack?
+    "ele",
+    "twe",
+    "thn",
+    "vtw",
+    "vth",
+    "vsi",
+    "vni",
+    "nar"
 ];
 
 /**
@@ -127,7 +146,44 @@ const name_5 = [
     "or700",  // Shinryu
     "or800",  // Mog
     "or200",  // Chaos
-    "or210",  // Faral Chaos
+    "or210",  // Faral Chaos,
+    "nar01",  // Narriator
+    "nar02",  // Narriator
+    "nar03",  // Narriator
+    "nar04",  // Narriator
+    "nar05",  // Narriator
+    "nar06",  // Narriator
+    "nar07",  // Narriator
+    "nar08",  // Narriator
+    "nar09",  // Narriator
+    "nar10",  // Narriator
+    "nar11",  // Narriator
+    "nar12",  // Narriator
+    "nar13",  // Narriator
+    "nar14",  // Narriator
+    "nar15",  // Narriator
+    "nar16",  // Narriator
+    "nar17",  // Narriator
+    "one00",  // stage
+    "two00",  // stage
+    "two05",  // stage
+    "thr00",  // stage
+    "for00",  // stage
+    "fiv00",  // stage
+    "six00",  // stage
+    "sev00",  // stage
+    "eht00",  // stage
+    "nin00",  // stage
+    "ten00",  // stage
+    "org00",  // stage
+    "org50",  // stage
+    "ele00",  // stage
+    "twe00",  // stage
+    "thn00",  // stage
+    "vtw00",  // stage
+    "vth00",  // stage
+    "vsi00",  // stage
+    "vni00",  // stage
 ];
 
 /**
@@ -138,6 +194,7 @@ const name_6 = [
     "one200", // Garland
     "two100", // Firion
     "two200", // Emperor
+    "two201", // Emperor
     "thr100", // Onion
     "thr200", // Cod
     "for100", // Cecil
@@ -149,21 +206,31 @@ const name_6 = [
     "six100", // Terra
     "six200", // Kefka
     "sev100", // Cloud
+    "sev101", // Cloud?
+    "sev102", // Cloud?
+    "sev103", // Cloud?
+    "zck100", // Zack
     "sev110", // Tifa
     "sev120", // Aerith
     "sev200", // Sephiroth
+    "sev201", // Sephiroth?
     "eht100", // Squall
     "eht110", // Laguna
     "eht200", // Ultimeica
     "nin100", // Zidane
+    "nin101", // Zidane?
     "nin200", // Kuja
     "ten100", // Tidus
     "ten110", // Yuna
+    "ten111", // Yuna?
+    "ten120", // Yuna?
+    "ten121", // Yuna?
     "ten200", // Jecht
     "gst100", // Shantotto
     "gst110", // Prishe
     "gst120", // Vaan
     "gst130", // Lightning
+    "gst131", // Lightning
     "gst200", // Gabranth
     "org100", // Cosmos
     "org700", // Shinryu
@@ -177,8 +244,8 @@ const name_6 = [
  */
 const exts = {
     "RIFF":        "at3",
-    "ARC\u0001":   "objx",
-    "MPK ":        "mpk",
+    "ARC\u0001":   "objx", // can also be .evex
+    "MPK ":        "mpk",  // can also be .bin
     "OMG.":        "gmo",
     "DES4":        "id",
     "PSF":         "sfo",

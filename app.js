@@ -24,7 +24,6 @@ const {
     check_meta
 } = require('./src/functions.js');
 
-
 // Set commands to program for
 PROGRAM
   .name('dissida_filelist')
@@ -33,16 +32,16 @@ PROGRAM
 
   .option('-p, --package_info <string>',   'Input path of PACKAGE_INFO.BIN file to create a fresh PACKAGE_INFO.json file.')
 
-  .option('-m, --meta <string>',           'Reports meta data on found file names in list based on extension type.')
+  .option('-m, --meta',                    'Reports meta data on found file names in list based on extension type.')
+
+  .option(`-s, --sort`,                    `Creates path of PACKAGE_INFO.json file to create a sorted PACKAGE_INFO_sorted.json file, based off of the offset in the PACKAGE.BIN file.`)
+
+  .option('-e, --enforce_ext',             `Enforce an ext check if the file name string doesn't match the file magics.`)
 
   .option(`-h, --hash <string>`,           `Input a single file path string to see if it matches any hashes. Will add any matching file paths to local PACKAGE_INFO.json file. Can also use wildcards characters for inserting character codes or numbers. See --help for details. Can also use a .txt file with --text for muliple entries.`)
 
   .option(`-t, --text <string>`,           `Batch version of --hash. Input a text file and it will hash each line for a file match.`)
-
-  .option('-e, --enforce_ext',             `Enforce an ext check if the file name string doesn't match the file magics.`)
   
-  .option(`-s, --sorted <string>`,         `Input path of PACKAGE_INFO.json file to create a sorted PACKAGE_INFO_sorted.json file, based off of the offset in the PACKAGE.BIN file.`)
-
   .option(`-x, --extract <string>`,        'Extracts all files from the input PACKAGE.BIN file.')
 
   .option(`-r, --replace <string>`,        'Replace a file in the PACKAGE.BIN file (with in limits). Input path of new file to add / replace in PACKAGE.BIN (name doesn\'t matter). Must use with --filename for PACKAGE_INFO.json filename entry match. PACKAGE.BIN and PACKAGE_INFO.json must be in root directory.')
@@ -67,15 +66,15 @@ const ARGV = PROGRAM.opts();
 const input_set = new Set([
     /^-p/,  /^--package_info/,
     /^-m/,  /^--meta/,
+    /^-s/,  /^--sort/,
+    /^-e/,  /^--enforce_ext/,
     /^-h/,  /^--hash/,
     /^-t/,  /^--text/,
-    /^-e/,  /^--enforce_ext/,
-    /^-s/,  /^--sorted/,
     /^-x/,  /^--extract/,
     /^-r/,  /^--replace/,
     /^-f/,  /^--filename/,
     /^-c/,  /^--compile/,
-  ]);
+]);
 
 /**
  * Filters out strings that match any regular expression in the provided set.
@@ -86,7 +85,7 @@ const input_set = new Set([
  */
 function filterByRegex(strings, regexSet) {
     return strings.filter(str => ![...regexSet].some(regex => regex.test(str) ));
-}
+};
   
 const _INPUT_FILE = filterByRegex(process.argv.slice(2), input_set)[0];
 
@@ -119,57 +118,6 @@ if(_INPUT_FILE != undefined){
         has_txt_file = true;
     }
 
-    if(ARGV.meta){
-        const path = ARGV.meta && ARGV.meta.replace(/^=/,"");
-        var PATH_TO_JSON = path.join(path);
-        if(!fs.existsSync(PATH_TO_JSON)){
-            Logger.error("Input PACKAGE_INFO.json not found.");
-            Logger.error("Checking for PACKAGE_INFO.json in base directory.");
-            PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
-            if(!fs.existsSync(PATH_TO_JSON)){
-                Logger.error("Could not find PACKAGE_INFO.json.");
-                Logger.error(PATH_TO_JSON);
-                await exit();
-            }
-        }
-        try {
-            const data = fs.readFileSync(PATH_TO_JSON);
-            const info = JSON.parse(data.toString());
-            await check_meta(info);
-        } catch (error) {
-            Logger.error("Issue reading PACKAGE_INFO.json data.");
-            Logger.error(error);
-            await exit();
-        }
-    } else
-    if(ARGV.sorted){
-        const sorted = ARGV.sorted && ARGV.sorted.replace(/^=/,"");
-        var PATH_TO_JSON = sorted;
-        if(!fs.existsSync(PATH_TO_JSON)){
-            Logger.error("Input PACKAGE_INFO.json not found.");
-            Logger.error("Checking for PACKAGE_INFO.json in base directory.");
-            PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
-            if(!fs.existsSync(PATH_TO_JSON)){
-                Logger.error("Could not find PACKAGE_INFO.json.");
-                Logger.error(PATH_TO_JSON);
-                await exit();
-            }
-        }
-        try {
-            var PATH_TO_SORTED = path.join(path.dirname(PATH_TO_JSON),'PACKAGE_INFO_sorted.json');
-            const data = fs.readFileSync(PATH_TO_JSON);
-            const info = JSON.parse(data.toString());
-            const sort = Object.values(info).sort((a,b)=>a.offset - b.offset);
-            fs.writeFileSync(PATH_TO_SORTED, JSON.stringify(sort,null,4));
-            Logger.info("Sorted data written to:");
-            Logger.info(PATH_TO_SORTED);
-            await exit();
-        } catch (error) {
-            Logger.error("Issue reading PACKAGE_INFO.json data.");
-            Logger.error(error);
-            await exit();
-        }
-    } else
     if(ARGV.replace && ARGV.filename){
         const {replace, filename} = ARGV;
         const PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
@@ -210,7 +158,25 @@ if(_INPUT_FILE != undefined){
                     await exit();
                 }
                 const JSON_DATA = JSON.parse(fs.readFileSync(PATH_TO_JSON).toString());
-                await read_text(TXT_INPUT, JSON_DATA, PATH_TO_JSON);
+                await read_text(TXT_INPUT, JSON_DATA, PATH_TO_JSON, ARGV.enforce_ext);
+                if(ARGV.meta){
+                    await check_meta(JSON_DATA);
+                }
+                if(ARGV.sort){
+                    try {
+                        var PATH_TO_SORT = path.join(path.dirname(PATH_TO_JSON),'PACKAGE_INFO_sorted.json');
+                        const sort = Object.values(JSON_DATA).sort((a,b)=>a.offset - b.offset);
+                        fs.writeFileSync(PATH_TO_SORT, JSON.stringify(sort,null,4));
+                        Logger.info("Sorted data written to:");
+                        Logger.info(PATH_TO_SORT);
+                        await exit();
+                    } catch (error) {
+                        Logger.error("Issue reading PACKAGE_INFO.json data.");
+                        Logger.error(error);
+                        await exit();
+                    }
+                }
+                await exit();
             } else {
                 Logger.error("File does not exist!");
                 Logger.error(TXT_INPUT);
@@ -228,42 +194,66 @@ if(_INPUT_FILE != undefined){
             const PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
             if(hasPlaceholders(hash_str) != null){
                 if(fs.existsSync(PATH_TO_JSON)){
-                    const JSON_DATA = JSON.parse(fs.readFileSync(PATH_TO_JSON).toString());
-                    Logger.info("Wildscards detected!");
-                    Logger.info("Creating an array of strings.");
-                    Logger.info(`${C_HEX.yellow}Note${C_HEX.reset}: False positive as possible so use sparingly.`);
-                    
-                    const str_arays = generateReplacements(hash_str);
-                    const len = str_arays.length;
-                    var found = 0;
-                    for (let i = 0; i < str_arays.length; i++) {
-                        const str_path = str_arays[i];
-                        const hash_num = hash(str_path);
-                        Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: ${C_HEX.magenta}Path:${C_HEX.reset} ${C_HEX.yellow}${str_path}${C_HEX.reset}`);
-                        Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Number:`, hash_num);
-                        Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Hex:`, to4ByteHex(hash_num));
-                        found += await check_name(JSON_DATA, hash_num, str_path, ARGV.enforce_ext);
+                    try {
+                        var JSON_DATA = JSON.parse(fs.readFileSync(PATH_TO_JSON).toString());
+                        Logger.info("Wildscards detected!");
+                        Logger.info("Creating an array of strings.");
+                        Logger.info(`${C_HEX.yellow}Note${C_HEX.reset}: False positive as possible so use sparingly.`);
+                        
+                        const str_arays = generateReplacements(hash_str);
+                        const len = str_arays.length;
+                        var found = 0;
+                        for (let i = 0; i < str_arays.length; i++) {
+                            const str_path = str_arays[i];
+                            const hash_num = hash(str_path);
+                            Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: ${C_HEX.magenta}Path:${C_HEX.reset} ${C_HEX.yellow}${str_path}${C_HEX.reset}`);
+                            Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Number:`, hash_num);
+                            Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Hex:`, to4ByteHex(hash_num));
+                            found += await check_name(JSON_DATA, hash_num, str_path, ARGV.enforce_ext);
+                        }
+                        Logger.info(`${C_HEX.green}Found ${found} matches!${C_HEX.reset}`);
+                        fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
+                        if(found){
+                            Logger.info("Updated PACKAGE_INFO.json file!");
+                        }
+                        const sorted = Object.values(JSON_DATA);
+                        var found = 0;
+                        for (let i = 0; i < sorted.length; i++) {
+                            const el = sorted[i];
+                            if(el.filename != ""){
+                                found++;
+                            }
+                        }
+                        console.log(`Filenames: ${found} / ${sorted.length}`);
+                    } catch (error) {
+                        Logger.error("Issue reading PACKAGE_INFO.json data.");
+                        Logger.error(error);
+                        await exit();
                     }
-                    Logger.info(`${C_HEX.green}Found ${found} matches!${C_HEX.reset}`);
-                    fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
-                    if(found){
-                        Logger.info("Updated PACKAGE_INFO.json file!");
+                    if(ARGV.meta){
+                        await check_meta(JSON_DATA);
                     }
-                    const sorted = Object.values(JSON_DATA);
-                    var found = 0;
-                    for (let i = 0; i < sorted.length; i++) {
-                        const el = sorted[i];
-                        if(el.filename != ""){
-                            found++;
+                    if(ARGV.sort){
+                        try {
+                            var PATH_TO_SORT = path.join(path.dirname(PATH_TO_JSON),'PACKAGE_INFO_sorted.json');
+                            const sort = Object.values(JSON_DATA).sort((a,b)=>a.offset - b.offset);
+                            fs.writeFileSync(PATH_TO_SORT, JSON.stringify(sort,null,4));
+                            Logger.info("Sorted data written to:");
+                            Logger.info(PATH_TO_SORT);
+                            await exit();
+                        } catch (error) {
+                            Logger.error("Issue reading PACKAGE_INFO.json data.");
+                            Logger.error(error);
+                            await exit();
                         }
                     }
-                    console.log(`Filenames: ${found} / ${sorted.length}`);
                     await exit();
                 } else {
                     Logger.error("Couldn't find local PACKAGE_INFO.json to save the data.");
                     Logger.error(PATH_TO_JSON);
                     await exit();
                 }
+                await exit();
             } else {
                 const hash_num = hash(hash_str);
                 Logger.info(`${C_HEX.magenta}Path:${C_HEX.reset}: ${C_HEX.yellow}${hash_str}${C_HEX.reset}`);
@@ -288,6 +278,23 @@ if(_INPUT_FILE != undefined){
                         }
                     }
                     console.log(`Filenames: ${found} / ${sorted.length}`);
+                    if(ARGV.meta){
+                        await check_meta(JSON_DATA);
+                    }
+                    if(ARGV.sort){
+                        try {
+                            var PATH_TO_SORT = path.join(path.dirname(PATH_TO_JSON),'PACKAGE_INFO_sorted.json');
+                            const sort = Object.values(JSON_DATA).sort((a,b)=>a.offset - b.offset);
+                            fs.writeFileSync(PATH_TO_SORT, JSON.stringify(sort,null,4));
+                            Logger.info("Sorted data written to:");
+                            Logger.info(PATH_TO_SORT);
+                            await exit();
+                        } catch (error) {
+                            Logger.error("Issue reading PACKAGE_INFO.json data.");
+                            Logger.error(error);
+                            await exit();
+                        }
+                    }
                     await exit();
                 } else {
                     Logger.error("Couldn't find local PACKAGE_INFO.json to save the data.");
@@ -301,7 +308,7 @@ if(_INPUT_FILE != undefined){
             await exit();
         }
     } else 
-    if(ARGV.compile|| has_package_info_json){
+    if(ARGV.compile || has_package_info_json){
         const package_json = _INPUT_FILE || ARGV.compile && ARGV.compile.replace(/^=/,"");
         try {
             Logger.info("PACKAGE_INFO.BIN creation triggered!");
@@ -339,7 +346,22 @@ if(_INPUT_FILE != undefined){
             // trys the input string as path
             if(fs.existsSync(package_info)){
                 const PATH_TO_INFO = package_info;
-                await _MAKE_PACKAGE_INFO(PATH_TO_INFO);
+                const JSON_DATA = await _MAKE_PACKAGE_INFO(PATH_TO_INFO);
+                if(ARGV.sort){
+                    try {
+                        var PATH_TO_SORT = path.join(path.dirname(PATH_TO_INFO),'PACKAGE_INFO_sorted.json');
+                        const sort = Object.values(JSON_DATA).sort((a,b)=>a.offset - b.offset);
+                        fs.writeFileSync(PATH_TO_SORT, JSON.stringify(sort,null,4));
+                        Logger.info("Sorted data written to:");
+                        Logger.info(PATH_TO_SORT);
+                        await exit();
+                    } catch (error) {
+                        Logger.error("Issue reading PACKAGE_INFO.json data.");
+                        Logger.error(error);
+                        await exit();
+                    }
+                }
+                await exit();
             } else {
                 // trys for default location
                 Logger.warn("Couldn't find PACKAGE_INFO.BIN in input path.");
@@ -351,7 +373,22 @@ if(_INPUT_FILE != undefined){
                     Logger.error(PATH_TO_INFO);
                     await exit();
                 }
-                await _MAKE_PACKAGE_INFO(PATH_TO_INFO);
+                const JSON_DATA = await _MAKE_PACKAGE_INFO(PATH_TO_INFO);
+                if(ARGV.sort){
+                    try {
+                        var PATH_TO_SORT = path.join(path.dirname(PATH_TO_INFO),'PACKAGE_INFO_sorted.json');
+                        const sort = Object.values(JSON_DATA).sort((a,b)=>a.offset - b.offset);
+                        fs.writeFileSync(PATH_TO_SORT, JSON.stringify(sort,null,4));
+                        Logger.info("Sorted data written to:");
+                        Logger.info(PATH_TO_SORT);
+                        await exit();
+                    } catch (error) {
+                        Logger.error("Issue reading PACKAGE_INFO.json data.");
+                        Logger.error(error);
+                        await exit();
+                    }
+                }
+                await exit();
             }
         } catch (error) {
             Logger.error("Issue reading PACKAGE_INFO.BIN.");
@@ -392,7 +429,42 @@ if(_INPUT_FILE != undefined){
             await exit();
         }
     } else {
-        Logger.error("Didn't run anything. Try running the programming with --help to get started.");
-        await exit();
+        if( ARGV.meta ||
+            ARGV.sort
+        ){
+            const PATH_TO_JSON = path.join(DIR_NAME, 'PACKAGE_INFO.json');
+            if(fs.existsSync(PATH_TO_JSON)){
+                try {
+                    const JSON_DATA = JSON.parse(fs.readFileSync(PATH_TO_JSON).toString());
+                    if(ARGV.meta){
+                        await check_meta(JSON_DATA);
+                    }
+                    if(ARGV.sort){
+                        try {
+                            var PATH_TO_SORT = path.join(path.dirname(PATH_TO_JSON),'PACKAGE_INFO_sorted.json');
+                            const sort = Object.values(JSON_DATA).sort((a,b)=>a.offset - b.offset);
+                            fs.writeFileSync(PATH_TO_SORT, JSON.stringify(sort,null,4));
+                            Logger.info("Sorted data written to:");
+                            Logger.info(PATH_TO_SORT);
+                            await exit();
+                        } catch (error) {
+                            Logger.error("Issue reading PACKAGE_INFO.json data.");
+                            Logger.error(error);
+                            await exit();
+                        }
+                    }
+                    await exit();
+                } catch (error) {
+                    Logger.error("Error reading local PACKAGE_INFO.json.");
+                    await exit();
+                }
+            } else {
+                Logger.error("Couldn't find local PACKAGE_INFO.json to read data.");
+                await exit();
+            }
+        } else {
+            Logger.error("Didn't run anything. Try running the programming with --help to get started.");
+            await exit();
+        }
     }
 })();

@@ -336,7 +336,7 @@ function read_info(info_data, package_data = null){
  * 
  * @param {string} PATH_TO_INFO - The path to the PACKAGE_INFO.BIN file.
  * @throws {Error} - If there is an issue reading the data.
- * @returns {Promise<void>} - A promise that resolves when the function is done.
+ * @returns {Promise<any>} - A promise that resolves when the function is done.
  */
 async function _MAKE_PACKAGE_INFO(PATH_TO_INFO){
     try {
@@ -359,7 +359,7 @@ async function _MAKE_PACKAGE_INFO(PATH_TO_INFO){
                 fs.writeFileSync(new_loc, JSON.stringify(info,null,4));
                 Logger.info("Replaced PACKAGE_INFO.json");
                 Logger.info(new_loc);
-                return await exit();
+                return info;
             } else {
                 // creation canceled
                 Logger.warn("PACKAGE_INFO.json creation canceled");
@@ -370,7 +370,7 @@ async function _MAKE_PACKAGE_INFO(PATH_TO_INFO){
             fs.writeFileSync(new_loc, JSON.stringify(info,null,4));
             Logger.info("PACKAGE_INFO.json created!");
             Logger.info(new_loc);
-            return await exit();
+            return info;
         }
     } catch(error){
         Logger.error("Issue reading PACKAGE.BIN.");
@@ -418,13 +418,13 @@ async function _EXTRACT_PACKAGE_DATA(PATH_TO_DATA){
                 
                 br.FSeek(FILE.offset);
                 const file_data = br.extract(FILE.size);
-                var FILE_PATH = path.join(BASE_PATH,FILE.filename.toLocaleLowerCase());
+                var FILE_PATH = path.join(BASE_PATH, FILE.filename.toLocaleLowerCase());
 
                 if( FILE.filename == "" ||
                     FILE.filename == undefined
                 ){
                     const new_ext = exts[FILE.type] ? exts[FILE.type] : "data";
-                    const new_name = "unknown/" + FILE.hex + "." + new_ext;
+                    const new_name = "unknown/" + FILE.file_num + "." + new_ext;
                     FILE_PATH = path.join(BASE_PATH, new_name);
                 }
 
@@ -556,9 +556,10 @@ async function check_name(file_list, hsh, str, check_ext = false){
  * @param {string} TXT_FILE - The path to the text file to read.
  * @param {Object} JSON_DATA - An object mapping file hashes to their metadata, including filenames.
  * @param {string} PATH_TO_JSON - The path to the PACKAGE_INFO.json file.
+ * @param {boolean?} check_ext - checks ext base on match
  * @returns {Promise<any>} - Returns 1 if a new filename is assigned, 0 if the hash already has a filename, or does nothing if the hash is not found.
  */
-async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON){
+async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON, check_ext){
     const TEXT_DATA = fs.readFileSync(TXT_FILE, 'utf8').split('\n');
     var amount = 0;
     for (let i = 0; i < TEXT_DATA.length; i++) {
@@ -577,21 +578,27 @@ async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON){
                 Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: ${C_HEX.magenta}Path:${C_HEX.reset} ${C_HEX.yellow}${str_path}${C_HEX.reset}`);
                 Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Number:`, hash_num);
                 Logger.info(`${C_HEX.yellow}[${i+1} of ${len}]${C_HEX.reset}: Hex:`, to4ByteHex(hash_num));
-                amount += await check_name(JSON_DATA, hash_num, str_path);
+                amount += await check_name(JSON_DATA, hash_num, str_path, check_ext);
             }
         } else {
             const hash_num = hash(str);
             Logger.info(`${C_HEX.magenta}Path:${C_HEX.reset} ${C_HEX.yellow}${str}${C_HEX.reset}`);
             Logger.info(`Number:`, hash_num);
             Logger.info(`Hex:`, to4ByteHex(hash_num));
-            amount += await check_name(JSON_DATA, hash_num, str);
+            amount += await check_name(JSON_DATA, hash_num, str, check_ext);
         }  
     }
 
     Logger.info(`${C_HEX.green}Found ${amount} matches!${C_HEX.reset}`);
     if(amount){
-        fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
-        Logger.info("Updated PACKAGE_INFO.json file!");
+        try {
+            fs.writeFileSync(PATH_TO_JSON, JSON.stringify(JSON_DATA,null,4));
+            Logger.info("Updated PACKAGE_INFO.json file!");
+        } catch (error) {
+            Logger.error("Failed to update PACKAGE_INFO.json file!");
+            Logger.error(error);
+            return true;
+        }
     }
     const sorted = Object.values(JSON_DATA);
     var found = 0;
@@ -602,7 +609,7 @@ async function read_text(TXT_FILE, JSON_DATA, PATH_TO_JSON){
         }
     }
     console.log(`Filenames: ${found} / ${sorted.length}`);
-    return await exit();
+    return true;
 };
 
 /**

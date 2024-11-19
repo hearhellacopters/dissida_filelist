@@ -1,6 +1,6 @@
-# DISSIDIA 012 package extractor
+# DISSIDIA PSP package extractor
 
-An all in one tool for file name hashing, files decompiling and recompiling for Dissidia 012 for the PSP. Tested on version ULUS10566. File list included is not finished. At the time of writing this only 7409 of 11043 files, but PRs are welcomed. Should work on other copies of Dissidia as well but you'll need to create a new files list from scratch.
+An all in one tool for file name hashing, files decompiling and recompiling for Dissidia 012 for the PSP. Tested on version ULUS10566 (Duodecim US). File list included is almost complete. At the time of writing this it has 10848 of 11043 files (PRs are welcomed if you find any of the remaining). Should work on other copies of Dissidia as well but you'll need to create a new files list from scratch.
 
 ## What is this?
 
@@ -55,14 +55,40 @@ Gives a report on found file names in list based on extension type. Example:
 Found Total: 7409 / 11043
 
 ```cmd
-dissida_filelist-x64.exe --meta="C:/psp_games/dissidia/PACKAGE_INFO.json"
+dissida_filelist-x64.exe --meta"
+```
+
+### sort
+
+> -s for short.
+
+Creates a sorted PACKAGE_INFO_sorted.json file as well when using the PACKAGE_INFO.json, based off of the offset of the file within the PACKAGE.BIN file.
+
+```cmd
+dissida_filelist-x64.exe --sort"
+```
+
+### enforce_ext
+
+> -e for short.
+
+An ext check if the file name string doesn't match the file magics. Prompts you if you want to accept the file name.
+
+```cmd
+dissida_filelist-x64.exe --enforce_ext text="C:/psp_games/dissidia/PACKAGE_INFO.json"
 ```
 
 ### hash
 
 > -h for short.
 
-Basic hash command to check if the file name is in the file list. Can also accept wild cards.
+Basic hash command to check if the file name is in the file list.
+
+```cmd
+dissida_filelist-x64.exe --hash="voice/en/event/up21/up21_107_190zi.at3"
+```
+
+Can also accept wild cards.
 
 Wildcards for character and series codes are **%1s, %2s, %3s, %5s and %6s**.
 
@@ -83,7 +109,7 @@ Wildcards for basic increasing numbers are **%1d, %2d, %3d, %4d and %5d** for a 
 False positive as possible with wildcards due to the limits of the hashing formula, so do use sparingly!
 
 ```cmd
-dissida_filelist-x64.exe --hash="voice/en/event/up21/up21_107_190zi.at3"
+dissida_filelist-x64.exe --enforce_ext --hash="voice/en/event/up21/up21_10%1d_190%2s.at3"
 ```
 
 ### text
@@ -95,17 +121,7 @@ This is the batch command for --hash. Enter a text file path and it will hash ea
 **Note:** Wild cards are also checked so be careful not to over do it.
 
 ```cmd
-dissida_filelist-x64.exe --text="C:/psp_games/dissidia/file_names.txt"
-```
-
-### sorted
-
-> -s for short.
-
-Creates a sorted PACKAGE_INFO_sorted.json file, based off of the offset in the PACKAGE.BIN file.
-
-```cmd
-dissida_filelist-x64.exe --text="C:/psp_games/dissidia/PACKAGE_INFO.json"
+dissida_filelist-x64.exe --enforce_ext --text="C:/psp_games/dissidia/file_names.txt"
 ```
 
 ### extract
