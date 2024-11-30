@@ -1,5 +1,5 @@
 {
-  "name": "dissida_filelist",
+  "name": "dissidia_filelist",
   "version": "1.0.4",
   "description": "Dissidia PSP package.bin file list tool",
   "main": "app.js",
